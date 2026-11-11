@@ -23,19 +23,27 @@
 
 /* Custom Math & Academic Callout Styles Preserving Original Lesson Aesthetics */
 .math-display-box {
-  background-color: #f8fafc;
-  border-left: 4px solid #2563eb;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-left: 4px solid #06b6d4;
+  border-right: 1px solid rgba(226, 232, 240, 0.8);
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
   padding: 0.875rem 1.25rem;
-  border-radius: 0.5rem;
-  margin: 0.65rem 0;
+  border-radius: 0.625rem;
+  margin: 0.75rem 0;
   color: #0f172a;
   overflow-x: auto;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
 }
 
 .dark .math-display-box {
-  background-color: #0f172a;
-  border-left-color: #3b82f6;
+  background: linear-gradient(135deg, #0f172a, #0b0f19);
+  border-left-color: #06b6d4;
+  border-right: 1px solid rgba(30, 41, 59, 0.8);
+  border-top: 1px solid rgba(30, 41, 59, 0.8);
+  border-bottom: 1px solid rgba(30, 41, 59, 0.8);
   color: #f1f5f9;
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.3);
 }
 
 .katex-display {
@@ -43,4 +51,65 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.25rem 0;
+}
+
+/* Unique Lucrative Outlines & Radiant Theme Accents */
+.lucrative-border {
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lucrative-border:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 0 30px -4px rgba(6, 182, 212, 0.22);
+}
+
+.dark .lucrative-border {
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.15);
+}
+
+.dark .lucrative-border:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 35px -2px rgba(6, 182, 212, 0.3);
+}
+
+/* Lucrative Card Container with Gradient Crown */
+.lucrative-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.dark .lucrative-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(11, 15, 25, 0.9));
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+}
+
+.lucrative-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b);
+  opacity: 0.85;
+}
+
+.lucrative-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 12px 30px -8px rgba(6, 182, 212, 0.18);
+}
+
+.dark .lucrative-card:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 12px 36px -8px rgba(6, 182, 212, 0.22);
 }

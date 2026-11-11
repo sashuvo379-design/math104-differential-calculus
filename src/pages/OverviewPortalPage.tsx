@@ -8,6 +8,7 @@ import {
 } from '../data/overviewData';
 import { KaTeXMath, RichMathText } from '../components/common/KaTeXMath';
 import { HessianExplorer } from '../components/interactive/HessianExplorer';
+import { SurfaceGrapher3D } from '../components/interactive/SurfaceGrapher3D';
 import { Link } from '../context/RouterContext';
 import { useProgress } from '../context/ProgressContext';
 import { Eye, EyeOff, Info, Lightbulb, RotateCcw } from 'lucide-react';
@@ -253,6 +254,9 @@ export const OverviewPortalPage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Interactive 3D Surface Visualizer for Module 2 */}
+          <SurfaceGrapher3D />
 
           {/* Hessian Derivation */}
           <div className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">

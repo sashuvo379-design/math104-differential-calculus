@@ -5,6 +5,7 @@ import { PHASE_LESSONS } from '../data/phasesData';
 import {
   ArrowRight,
   BookOpen,
+  Box,
   CheckCircle2,
   Compass,
   FileSpreadsheet,
@@ -20,35 +21,42 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Hero Banner */}
-      <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-indigo-900/60">
-        <div className="max-w-3xl space-y-4">
+      {/* Hero Banner with Cosmic Ambient Glow and Lucrative Outlines */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#090E1A] via-[#0E1528] to-[#141B33] text-white rounded-3xl p-6 sm:p-10 shadow-[0_0_50px_-10px_rgba(6,182,212,0.2)] border border-cyan-500/30">
+        {/* Ambient Radial Spotlights */}
+        <div className="absolute -top-32 -right-32 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-3xl space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-400/30">
+            <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-2xs">
               Department of Mathematics &amp; ISRT • University of Dhaka
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
               First-Year B.S. Honours
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-200 border border-amber-400/40 flex items-center gap-1.5 shadow-2xs">
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-400/20 text-amber-200 border border-amber-400/50 flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
               <span>🎓</span> Made and developed by Saad, IASDS-32
             </span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight bg-gradient-to-r from-white via-slate-100 to-cyan-200 bg-clip-text text-transparent">
             MATH 104: Differential Calculus — Interactive Masterclass &amp; Exam Hub
           </h1>
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-light">
             Master single-variable and multivariable differential calculus from formal{' '}
-            <span className="font-serif italic">ε–δ</span> limits and continuity to implicit curves,
-            total differentials, the multivariable chain rule, 3D Hessian optimization, and
+            <span className="font-serif italic text-cyan-300">ε–δ</span> limits and continuity to implicit curves,
+            total differentials, the multivariable chain rule, <strong className="text-amber-300 font-semibold">3D interactive Hessian surfaces</strong>, and
             historical DU exam blueprints — based on the lectures of Dr. Md. Rakib Hossain.
           </p>
 
           {/* Continue Where You Left Off + Overall Progress Bar */}
           <div className="pt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-white/10 backdrop-blur-xs border border-white/15 flex flex-col justify-between gap-3">
+            <div className="p-4 rounded-2xl bg-white/5 backdrop-blur-md border border-white/15 flex flex-col justify-between gap-3 hover:border-cyan-400/40 transition-colors shadow-inner">
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-blue-300">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                   Continue Where You Left Off
                 </div>
                 <div className="text-sm font-bold text-white mt-1 truncate">
@@ -57,21 +65,20 @@ export const HomePage: React.FC = () => {
               </div>
               <Link
                 to={state.lastVisitedPath}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white transition-colors w-fit"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.35)] transition-all w-fit"
               >
                 <PlayCircle className="w-4 h-4" />
                 Resume Lesson
               </Link>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/10 backdrop-blur-xs border border-white/15 flex flex-col justify-between gap-2">
+            <div className="p-4 rounded-2xl bg-white/5 backdrop-blur-md border border-white/15 flex flex-col justify-between gap-2 shadow-inner">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold uppercase tracking-wider text-emerald-300">
                   Overall Course Progress
                 </span>
                 <span className="font-mono font-bold text-white">
-                  {state.completedUnits.length} / {totalUnitsCount} Units ({overallProgressPercent}
-                  %)
+                  {state.completedUnits.length} / {totalUnitsCount} Units ({overallProgressPercent}%)
                 </span>
               </div>
               <div
@@ -80,16 +87,16 @@ export const HomePage: React.FC = () => {
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-label="Overall course completion percentage"
-                className="w-full h-3 bg-slate-800 rounded-full overflow-hidden"
+                className="w-full h-3 bg-slate-950/80 rounded-full overflow-hidden p-0.5 border border-white/10"
               >
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-emerald-400 transition-all"
+                  className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]"
                   style={{ width: `${overallProgressPercent}%` }}
                 />
               </div>
-              <div className="flex justify-between text-[11px] text-slate-300">
-                <span>🔥 Streak: {state.streakDays} day(s)</span>
-                <Link to="/progress" className="underline hover:text-white">
+              <div className="flex justify-between text-[11px] text-slate-300 font-medium">
+                <span>🔥 Active Study Streak: {state.streakDays} day(s)</span>
+                <Link to="/progress" className="text-cyan-300 hover:underline">
                   View Full Dashboard →
                 </Link>
               </div>
@@ -98,11 +105,39 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* 3D Multivariable Surface Visualizer Teaser Banner */}
+      <section className="relative overflow-hidden p-6 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-[#090E1A] via-[#0F172A] to-[#141B33] text-white shadow-[0_0_30px_rgba(6,182,212,0.18)] flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">
+              Interactive 3D WebGL
+            </span>
+            <span className="text-xs font-bold text-amber-400 flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" /> Orbit &amp; Tangent Planes
+            </span>
+          </div>
+          <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+            <Box className="w-5 h-5 text-cyan-400" />
+            3D Multivariable Surface Grapher &amp; Hessian Explorer
+          </h2>
+          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+            Drag to rotate, pan, and zoom 3D surfaces in real-time. Inspect Saddle Points (z = x² − y²), Paraboloids (z = x² + y²), Dr. Md. Rakib Hossain Lecture 15 Slide Examples 5 &amp; 7, and live horizontal tangent planes.
+          </p>
+        </div>
+        <Link
+          to="/lab"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all shrink-0"
+        >
+          <Box className="w-4 h-4" />
+          Launch 3D Surface Lab →
+        </Link>
+      </section>
+
       {/* Master Portal Overview Callout */}
-      <section className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <section className="lucrative-card p-6 border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200">
               DU Master Portal
             </span>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -117,7 +152,7 @@ export const HomePage: React.FC = () => {
         </div>
         <Link
           to="/overview"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shrink-0 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shrink-0 transition-colors shadow-xs"
         >
           <Compass className="w-4 h-4" />
           Open Master Overview Hub
@@ -148,7 +183,7 @@ export const HomePage: React.FC = () => {
             return (
               <div
                 key={phase.id}
-                className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between gap-4 hover:border-blue-400 dark:hover:border-blue-600 transition-colors"
+                className="lucrative-card p-5 sm:p-6 flex flex-col justify-between gap-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -206,25 +241,24 @@ export const HomePage: React.FC = () => {
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Link
           to="/lab"
-          className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition-colors space-y-2"
+          className="lucrative-card p-5 space-y-2 hover:border-cyan-400/50"
         >
-          <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-950/70 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
             <FlaskConical className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
             Interactive Calculus Lab
           </h3>
           <p className="text-xs text-slate-600 dark:text-slate-400">
-            Derivative Explorer, Limit Visualizer, Secant-to-Tangent Animator, Step-by-Step Solver,
-            and Curve Sketcher.
+            3D Surface Grapher, Derivative Explorer, Limit Visualizer, Difference Quotients &amp; Solvers.
           </p>
         </Link>
 
         <Link
           to="/practice"
-          className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition-colors space-y-2"
+          className="lucrative-card p-5 space-y-2 hover:border-emerald-400/50"
         >
-          <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
             <GraduationCap className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -238,9 +272,9 @@ export const HomePage: React.FC = () => {
 
         <Link
           to="/quiz"
-          className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500 transition-colors space-y-2"
+          className="lucrative-card p-5 space-y-2 hover:border-purple-400/50"
         >
-          <div className="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-purple-100 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400 flex items-center justify-center">
             <Trophy className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -254,9 +288,9 @@ export const HomePage: React.FC = () => {
 
         <Link
           to="/formulas"
-          className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 transition-colors space-y-2"
+          className="lucrative-card p-5 space-y-2 hover:border-amber-400/50"
         >
-          <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 flex items-center justify-center">
             <FileSpreadsheet className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">Formula Cheat-Sheet</h3>

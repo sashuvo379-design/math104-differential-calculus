@@ -5,6 +5,7 @@ import { SecantToTangent } from '../components/interactive/SecantToTangent';
 import { StepByStepSolver } from '../components/interactive/StepByStepSolver';
 import { OptimizationSketcher } from '../components/interactive/OptimizationSketcher';
 import { HessianExplorer } from '../components/interactive/HessianExplorer';
+import { SurfaceGrapher3D } from '../components/interactive/SurfaceGrapher3D';
 import { useProgress } from '../context/ProgressContext';
 
 export const InteractiveLabPage: React.FC = () => {
@@ -25,9 +26,12 @@ export const InteractiveLabPage: React.FC = () => {
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
           Experiment with live graphs, tangent lines, limit tables, difference quotients, symbolic
-          step-by-step derivatives, curve sketching, and 3D Hessian discriminants.
+          step-by-step derivatives, curve sketching, and 3D multivariable surface exploration.
         </p>
       </div>
+
+      {/* Flagship 3D Multivariable Surface & Tangent Plane Engine */}
+      <SurfaceGrapher3D />
 
       <DerivativeExplorer />
       <LimitVisualizer />
