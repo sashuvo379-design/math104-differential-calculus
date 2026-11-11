@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH 104: Differential Calculus — Phase 3 Masterclass</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- MathJax 3 Configuration for Textbook-Grade Formula Typesetting -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['base', 'ams', 'noerrors', 'noundefined']}
+            },
+            chtml: {
+                matchFontHeight: true
+            },
+            options: {
+                renderActions: {
+                    addMenu: []
+                },
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .math-font {
+            font-family: 'Merriweather', serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .math-callout {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+        }
+        .trap-callout {
+            border-left: 4px solid #dc2626;
+            background: #fef2f2;
+        }
+        .exam-callout {
+            border-left: 4px solid #059669;
+            background: #ecfdf5;
+        }
+        .real-life-callout {
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+        }
+        mjx-container {
+            margin: 0.4em 0 !important;
+            outline: none;
+        }
+        .nav-link.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- Header & University Badge -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-700 text-white rounded-lg flex items-center justify-center font-bold text-xl shadow-md">
+                        &int;
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">ISRT DU Masterclass</span>
+                            <span class="text-xs font-semibold text-slate-500">First-Year B.S. Honours</span>
+                        </div>
+                        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">MATH 104: Differential Calculus</h1>
+                    </div>
+                </div>
+
+                <!-- Status Badges -->
+                <div class="hidden lg:flex items-center space-x-3 text-xs font-semibold">
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-md border border-slate-200">Phase 3: Multivariable Calculus</span>
+                    <span class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-md border border-emerald-200">Incourse: ~25 M</span>
+                    <span class="bg-amber-50 text-amber-700 px-3 py-1.5 rounded-md border border-amber-200">Final: 70 M Total</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Sub-Bar -->
+        <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 py-1.5 text-xs font-medium text-slate-600 whitespace-nowrap">
+                <a href="#unit-3-1" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">3.1 Total Differentials</a>
+                <a href="#unit-3-2" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">3.2 Differentiability (2 Variables)</a>
+                <a href="#unit-3-3" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">3.3 Error Propagation</a>
+                <a href="#self-assessment" class="px-3 py-1 rounded-md bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition-colors font-bold">&Delta; Self-Assessment</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Learning Canvas -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+
+        <!-- INTRODUCTORY BANNER -->
+        <section class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-800 inline-block mb-3">Academic Rigor & Departmental Standards</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">Phase 3: Differentiability & The Chain Rule for Several Variables</h2>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Based directly on Lecture 13 by Dr. Md. Rakib Hossain [cite: 10], this phase extends our calculus toolkit into higher dimensions. We transition from single-variable functions to functions of several variables, introducing total differentials, the formal definition of differentiability for surfaces, and practical applications in approximation and error propagation.
+                </p>
+            </div>
+        </section>
+
+        <!-- UNIT 3.1 -->
+        <section id="unit-3-1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 01</span>
+                    <span>&bull;</span>
+                    <span>Higher Dimensions</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 3.1: The Total Differential</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Navigating a Topographical Map</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    Imagine standing on a hillside. If you walk North, your elevation changes based on the slope in the North direction ($\partial z / \partial y$). If you walk East, your elevation changes based on the Eastward slope ($\partial z / \partial x$). The <strong>total differential</strong> $dz$ calculates your total approximate change in elevation by combining your movement in <em>both</em> directions simultaneously [cite: 10].
+                </p>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine: Definition of Total Differential</h3>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        If $z = f(x, y)$ and $\Delta x$ and $\Delta y$ are increments of $x$ and $y$, then the differentials of the independent variables $x$ and $y$ are $dx = \Delta x$ and $dy = \Delta y$ [cite: 10].
+                    </p>
+                    <p class="text-sm text-slate-700 leading-relaxed font-bold">
+                        The total differential of the dependent variable $z$ is:
+                    </p>
+                    <div class="text-center font-serif text-lg py-2">
+                        $$dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy = f_x(x, y) dx + f_y(x, y) dy$$
+                    </div>
+                </div>
+                
+                 <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4 mt-4">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        This definition can be extended to a function of three or more variables. For instance, if $w = f(x, y, z, u)$, then $dx = \Delta x$, $dy = \Delta y$, $dz = \Delta z$, $du = \Delta u$ [cite: 10]. The total differential of $w$ is:
+                    </p>
+                    <div class="text-center font-serif text-lg py-2">
+                        $$dw = \frac{\partial w}{\partial x} dx + \frac{\partial w}{\partial y} dy + \frac{\partial w}{\partial z} dz + \frac{\partial w}{\partial u} du$$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Example -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Example 1</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Find the total differential for each function [cite: 10]:</p>
+                    <ul class="list-none space-y-1">
+                        <li>a. $z = 2x \sin y - 3x^2y^2$</li>
+                        <li>b. $w = x^2 + y^2 + z^2$</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <div>
+                        <strong class="text-slate-900">a. The total differential $dz$ for $z = 2x \sin y - 3x^2y^2$ is:</strong>
+                        <div class="text-center font-serif text-sm py-2">
+                            $$dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy$$
+                        </div>
+                        <p class="text-slate-700">Calculate the partial derivatives:</p>
+                        <ul class="list-disc list-inside text-slate-700 pl-4">
+                            <li>$\frac{\partial z}{\partial x} = 2 \sin y - 6xy^2$</li>
+                            <li>$\frac{\partial z}{\partial y} = 2x \cos y - 6x^2y$</li>
+                        </ul>
+                        <div class="text-center font-serif text-sm py-2 font-bold text-indigo-700">
+                            $$dz = (2 \sin y - 6xy^2) dx + (2x \cos y - 6x^2y) dy$$
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-slate-100">
+                        <strong class="text-slate-900">b. The total differential $dw$ for $w = x^2 + y^2 + z^2$ is:</strong>
+                        <div class="text-center font-serif text-sm py-2">
+                            $$dw = \frac{\partial w}{\partial x} dx + \frac{\partial w}{\partial y} dy + \frac{\partial w}{\partial z} dz$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-2 font-bold text-indigo-700">
+                            $$dw = 2x \, dx + 2y \, dy + 2z \, dz$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 3.2 -->
+        <section id="unit-3-2" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 02</span>
+                    <span>&bull;</span>
+                    <span>Theoretical Foundations</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 3.2: Differentiability of Two Variables</h2>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">Definition of Differentiability</h3>
+                <p>
+                    Unlike a single variable function where differentiability simply means a derivative exists, for surfaces $z = f(x, y)$, differentiability requires the surface to be locally "flat" (approximated well by a tangent plane) [cite: 10].
+                </p>
+                
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-2">
+                    <p class="font-bold text-slate-800">Formal Definition [cite: 10]:</p>
+                    <p class="mt-2">A function $f$ given by $z = f(x, y)$ is <strong>differentiable</strong> at $(x_0, y_0)$ if $\Delta z$ can be written in the form:</p>
+                    <div class="text-center font-serif py-2">
+                        $$\Delta z = f_x(x_0, y_0)\Delta x + f_y(x_0, y_0)\Delta y + \varepsilon_1\Delta x + \varepsilon_2\Delta y$$
+                    </div>
+                    <p>where both $\varepsilon_1 \to 0$ and $\varepsilon_2 \to 0$ as $(\Delta x, \Delta y) \to (0, 0)$.</p>
+                    <p class="mt-2">The function $f$ is differentiable in a region $R$ if it is differentiable at each point in $R$ [cite: 10].</p>
+                </div>
+                
+                 <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 mt-4">
+                    <p class="font-bold text-blue-900">Theorem 13.4: Sufficient Condition for Differentiability [cite: 10]</p>
+                    <p class="mt-1 text-blue-800">If $f$ is a function of $x$ and $y$, where $f_x$ and $f_y$ are continuous in an open region $R$, then $f$ is differentiable on $R$.</p>
+                </div>
+            </div>
+
+             <!-- Faculty Example -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Proof Example</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Show that the function given by $f(x, y) = x^2 + 3y$ is differentiable at every point in the plane [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Proof:</div>
+
+                    <p class="text-slate-700">Letting $z = f(x, y)$, the exact increment of $z$ at an arbitrary point $(x, y)$ in the plane is [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$\Delta z = f(x + \Delta x, y + \Delta y) - f(x, y)$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= [(x + \Delta x)^2 + 3(y + \Delta y)] - (x^2 + 3y)$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= (x^2 + 2x\Delta x + \Delta x^2) + 3y + 3\Delta y - x^2 - 3y$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= 2x\Delta x + \Delta x^2 + 3\Delta y$$
+                    </div>
+                    <p class="text-slate-700 mt-2">We now arrange this to match the formal definition of differentiability:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= 2x(\Delta x) + 3(\Delta y) + \Delta x(\Delta x) + 0(\Delta y)$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                        $$= f_x(x, y)\Delta x + f_y(x, y)\Delta y + \varepsilon_1\Delta x + \varepsilon_2\Delta y$$
+                    </div>
+                    <p class="text-slate-700 mt-2">where $\varepsilon_1 = \Delta x$ and $\varepsilon_2 = 0$ [cite: 10].</p>
+                    <p class="text-slate-700">Because $\varepsilon_1 \to 0$ and $\varepsilon_2 \to 0$ as $(\Delta x, \Delta y) \to (0, 0)$, it follows that $f$ is differentiable at every point in the plane [cite: 10]. $\blacksquare$</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- UNIT 3.3 -->
+        <section id="unit-3-3" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 03</span>
+                    <span>&bull;</span>
+                    <span>Approximations</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 3.3: Approximation by Differentials & Error Propagation</h2>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
+                 <p>
+                    The exact change in $z$ is $\Delta z$. This change can be approximated by the total differential $dz$ [cite: 10].
+                </p>
+                <div class="text-center font-serif text-lg py-2">
+                    $$\Delta z \approx dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy$$
+                </div>
+            </div>
+
+            <!-- Faculty Example: Approximation -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Approximation Example</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Use the differential $dz$ to approximate the change in $z = \sqrt{4 - x^2 - y^2}$ as $(x, y)$ moves from the point $(1, 1)$ to the point $(1.01, 0.97)$. Compare this approximation with the exact change in $z$ [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <p class="text-slate-700">Letting $(x, y) = (1, 1)$ and $(x + \Delta x, y + \Delta y) = (1.01, 0.97)$ produces:</p>
+                    <p class="text-slate-700">$dx = \Delta x = 0.01$ and $dy = \Delta y = -0.03$ [cite: 10].</p>
+                    
+                    <p class="text-slate-700 mt-2">So, the change in $z$ can be approximated by $dz$:</p>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$\Delta z \approx dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy = \frac{-x}{\sqrt{4 - x^2 - y^2}} \Delta x + \frac{-y}{\sqrt{4 - x^2 - y^2}} \Delta y$$
+                    </div>
+                    
+                    <p class="text-slate-700 mt-2">When $x = 1$ and $y = 1$, you have:</p>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$\Delta z \approx -\frac{1}{\sqrt{2}} (0.01) - \frac{1}{\sqrt{2}} (-0.03) = \frac{0.02}{\sqrt{2}} = \sqrt{2} (0.01) \approx 0.0141$$
+                    </div>
+                    
+                    <div class="pt-4 border-t border-slate-100 mt-4">
+                        <strong class="text-slate-900">Comparison with Exact Change:</strong>
+                        <p class="text-slate-700 mt-1">The exact change corresponds to the difference in heights of two points on the surface of the hemisphere [cite: 10]:</p>
+                        <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                            $$\Delta z = f(1.01, 0.97) - f(1, 1)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1 overflow-x-auto font-bold text-indigo-700">
+                            $$= \sqrt{4 - (1.01)^2 - (0.97)^2} - \sqrt{4 - 1^2 - 1^2} \approx 0.0137$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Faculty Example: Error Propagation -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Error Propagation</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>The possible error involved in measuring each dimension of a rectangular box is $\pm 0.1$ millimeter. The dimensions of the box are $x = 50$ centimeters, $y = 20$ centimeters, and $z = 15$ centimeters. Use $dV$ to estimate the propagated error in the calculated volume of the box [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <p class="text-slate-700">The volume of the box is given by $V = xyz$, and so [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$dV = \frac{\partial V}{\partial x} dx + \frac{\partial V}{\partial y} dy + \frac{\partial V}{\partial z} dz$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$= yz \, dx + xz \, dy + xy \, dz$$
+                    </div>
+                    
+                    <p class="text-slate-700 mt-2">Using $0.1$ millimeter $= 0.01$ centimeter, you have $dx = dy = dz = \pm 0.01$, and the propagated error is approximately [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$dV = (20)(15)(\pm 0.01) + (50)(15)(\pm 0.01) + (50)(20)(\pm 0.01)$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto">
+                        $$= 300(\pm 0.01) + 750(\pm 0.01) + 1000(\pm 0.01)$$
+                    </div>
+                     <div class="text-center font-serif text-sm py-1 overflow-x-auto font-bold text-indigo-700">
+                        $$= 2050(\pm 0.01) = \pm 20.5 \text{ cubic centimeters}$$
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- SELF-ASSESSMENT PROBLEM SET -->
+        <section id="self-assessment" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Active Recall</span>
+                    <span>&bull;</span>
+                    <span>Practice Problems</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">&Delta; Phase 3 Self-Assessment Problem Set</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Test your preparation with these multivariable calculus problems based on Lecture 13 [cite: 10].</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Practice Q1 -->
+                <div class="border border-slate-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Practice Problem 1</span>
+                        <span class="text-xs text-slate-500">Total Differential</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-800">
+                        Find the total differential $dz$ for the function $z = x^2e^{3y}$
+                    </p>
+                    <button onclick="toggleElement('sol-q1')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">+ Reveal Step-by-Step Solution</button>
+                    <div id="sol-q1" class="hidden p-4 bg-slate-50 rounded-lg text-xs sm:text-sm text-slate-700 space-y-2 border border-slate-200">
+                        <p><strong>Solution:</strong></p>
+                        <p>The formula for the total differential is $dz = \frac{\partial z}{\partial x} dx + \frac{\partial z}{\partial y} dy$.</p>
+                        <p>Calculate $\frac{\partial z}{\partial x}$: Treat $y$ as a constant. The derivative of $x^2$ is $2x$.</p>
+                        <div class="text-center font-serif">$$\frac{\partial z}{\partial x} = 2x e^{3y}$$</div>
+                        <p>Calculate $\frac{\partial z}{\partial y}$: Treat $x$ as a constant. The derivative of $e^{3y}$ is $3e^{3y}$.</p>
+                        <div class="text-center font-serif">$$\frac{\partial z}{\partial y} = x^2 (3e^{3y}) = 3x^2 e^{3y}$$</div>
+                        <p>Substitute these back into the formula:</p>
+                        <div class="text-center font-serif font-bold text-indigo-700">$$dz = (2x e^{3y}) dx + (3x^2 e^{3y}) dy$$</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-bold text-slate-700">Institute of Statistical Research and Training (ISRT) &bull; University of Dhaka</p>
+            <p class="mt-1">MATH 104 Differential Calculus &bull; First-Year B.S. Honours &bull; Interactive Academic Masterclass</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+        // Collapsible element helper
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([el]);
+                }
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

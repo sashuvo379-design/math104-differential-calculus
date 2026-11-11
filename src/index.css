@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Custom Math & Academic Callout Styles Preserving Original Lesson Aesthetics */
+.math-display-box {
+  background-color: #f8fafc;
+  border-left: 4px solid #2563eb;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.5rem;
+  margin: 0.65rem 0;
+  color: #0f172a;
+  overflow-x: auto;
+}
+
+.dark .math-display-box {
+  background-color: #0f172a;
+  border-left-color: #3b82f6;
+  color: #f1f5f9;
+}
+
+.katex-display {
+  margin: 0.5em 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}

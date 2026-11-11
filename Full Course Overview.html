@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DU MATH 104: Master Interactive Portal & Exam Hub</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- KaTeX CDN for High-Quality Mathematical Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    /* Chart Container Styling per technical specification */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 320px;
+      max-height: 380px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 350px;
+      }
+    }
+
+    /* Math Box Custom Display */
+    .math-display-box {
+      background-color: #f8fafc;
+      border-left: 4px solid #2563eb;
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      margin: 0.75rem 0;
+      color: #0f172a;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+      overflow-x: auto;
+    }
+
+    /* Active Navigation Tab */
+    .tab-btn.active {
+      border-bottom-color: #2563eb;
+      color: #1d4ed8;
+      font-weight: 700;
+      background-color: #eff6ff;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 9999px;
+      background-color: #2563eb;
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+    }
+
+    .exam-badge {
+      background-color: #dc2626;
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+<!-- Chosen Palette: Academic Navy & Slate (Background: #f8fafc, Cards: white, Primary: #2563eb, Success: #059669, Warning: #d97706, Danger: #dc2626) -->
+<!-- Application Structure Plan:
+  Designed as a 5-Module Master Preparation Portal for University of Dhaka (DU) MATH 104 Differential Calculus.
+  - Tab 1: 4-Phase Curriculum Roadmap & Syllabus Masterplan (Phase 1 to Phase 4 breakdown with topic weights and core competencies).
+  - Tab 2: 3D Surface Geometry & Hessian Theory (Real-world surface intuition, Taylor expansion quadratic form derivation of D(x,y), and an interactive Hessian calculator engine).
+  - Tab 3: Complete Slide Solutions & Lecture Notes Repository (Dr. Md. Rakib Hossain Lecture 15 + Core Slide Theorems: Ex 3, Ex 4 Monkey Saddle, Ex 5 Distance to Plane, Ex 6 Open Box Optimization, Ex 7 Bounded Domain L1-L4 Path Decomposition, and Lagrange Multipliers Ex 1).
+  - Tab 4: DU 5-Slot Historical Past Exam Questions & Blueprint (Slot 1 epsilon-delta limit proofs, Slot 2 Leibniz recurrence & parity, Slot 3 Mean Value Theorems & trig proofs, Slot 4 Astroid invariant, Slot 5 Cubic asymptotes with repeated roots, plus Chart.js mark distribution graph).
+  - Tab 5: Speed Strategy, Traps & Self-Assessment Quiz Engine (4 Top Academic Mark Traps, 72-Hour Study Timetable, and an interactive 5-question mock quiz with instant scoring).
+-->
+<!-- Visualization & Content Choices:
+  - KaTeX Auto-Render Engine -> Render math expressions with fractions, summations, partial derivatives, and limit symbols.
+  - Interactive Hessian Discriminant Calculator -> Exploration/Analysis -> Dynamic evaluation of D = f_xx*f_yy - (f_xy)^2 -> Vanilla JS + HTML DOM.
+  - DU Final Exam Slot Weightage -> Compare -> Chart.js Bar Chart -> Visualizes percentage breakdown of exam marks across slots -> Canvas inside styled chart-container.
+  - Self-Test Quiz Engine -> Assessment/Engagement -> Vanilla JS state management for instant score calculation and explanation reveal.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <!-- Top Header Navigation -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
+            ∇
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">MATH 104: Differential Calculus</h1>
+              <span class="exam-badge">DU Master Portal</span>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Department of Mathematics • University of Dhaka</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Tabs -->
+        <div class="hidden lg:flex space-x-1">
+          <button onclick="switchTab('roadmap')" id="nav-roadmap" class="tab-btn active px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-600 hover:text-blue-600 transition-colors">
+            1. 4-Phase Roadmap
+          </button>
+          <button onclick="switchTab('intuition')" id="nav-intuition" class="tab-btn px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-600 hover:text-blue-600 transition-colors">
+            2. 3D Intuition & Hessian
+          </button>
+          <button onclick="switchTab('slides-notes')" id="nav-slides-notes" class="tab-btn px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-600 hover:text-blue-600 transition-colors">
+            3. Lecture Slides & Notes
+          </button>
+          <button onclick="switchTab('du-slots')" id="nav-du-slots" class="tab-btn px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-600 hover:text-blue-600 transition-colors">
+            4. DU Past Exam Blueprint
+          </button>
+          <button onclick="switchTab('exam-protocol')" id="nav-exam-protocol" class="tab-btn px-3 py-2 text-xs font-semibold rounded-t-lg border-b-2 border-transparent text-slate-600 hover:text-blue-600 transition-colors">
+            5. Strategy & Self-Quiz
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Bar -->
+      <div class="flex lg:hidden overflow-x-auto py-2 space-x-2 border-t border-slate-100">
+        <button onclick="switchTab('roadmap')" id="mobile-nav-roadmap" class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700 whitespace-nowrap">1. 4-Phase Outline</button>
+        <button onclick="switchTab('intuition')" id="mobile-nav-intuition" class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 whitespace-nowrap">2. Hessian & 3D</button>
+        <button onclick="switchTab('slides-notes')" id="mobile-nav-slides-notes" class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 whitespace-nowrap">3. Slides & Solutions</button>
+        <button onclick="switchTab('du-slots')" id="mobile-nav-du-slots" class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 whitespace-nowrap">4. DU Exam Slots</button>
+        <button onclick="switchTab('exam-protocol')" id="mobile-nav-exam-protocol" class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-600 whitespace-nowrap">5. Self-Quiz</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 1: 4-PHASE CURRICULUM ROADMAP -->
+    <!-- ==================================================================== -->
+    <section id="tab-roadmap" class="space-y-6">
+      
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full uppercase">Curriculum Overview</span>
+          <h2 class="text-xl font-bold text-slate-900">MATH 104: Comprehensive 4-Phase Academic Outline</h2>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          The DU MATH 104 Differential Calculus syllabus is structured into four progressive learning phases. Use this roadmap to track your mastery from fundamental limits to multivariable optimization and exam-level problem-solving.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- Phase 1 Card -->
+        <div class="bg-white rounded-xl p-5 border-l-4 border-l-blue-600 border-y border-r border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs font-bold rounded">PHASE 1</span>
+            <span class="text-xs font-semibold text-slate-500">Weight: 30% • Exam Slots 1 & 5</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Limits, Continuity & Multivariable Extrema</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Foundations of single and multivariable calculus, limit rigorousness, partial derivatives, and optimization on open/closed domains.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1 text-xs">
+            <div class="font-bold text-slate-800">Core Topics Covered:</div>
+            <ul class="list-disc list-inside text-slate-600 space-y-1">
+              <li>Formal $\varepsilon-\delta$ limit proofs for single & multivariable functions.</li>
+              <li>Partial differentiation & Euler's Theorem for homogeneous functions.</li>
+              <li>3D surfaces, horizontal tangent planes, & Hessian matrix $D(x,y)$.</li>
+              <li>Dr. Md. Rakib Hossain Lecture 15: Slide Examples 3 through 7.</li>
+              <li>Constrained optimization using Lagrange Multipliers ($\nabla f = \lambda \nabla g$).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phase 2 Card -->
+        <div class="bg-white rounded-xl p-5 border-l-4 border-l-emerald-600 border-y border-r border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">PHASE 2</span>
+            <span class="text-xs font-semibold text-slate-500">Weight: 25% • Exam Slot 2</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Successive Differentiation & Leibniz Theorem</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Higher-order derivatives, nth derivative expressions, Leibniz product rule, and value evaluation at the origin $(y_n)_0$.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1 text-xs">
+            <div class="font-bold text-slate-800">Core Topics Covered:</div>
+            <ul class="list-disc list-inside text-slate-600 space-y-1">
+              <li>Standard $n$-th derivatives of trigonometric, inverse trig, and algebraic forms.</li>
+              <li>Leibniz Theorem for $D^n[u \cdot v]$ expansion.</li>
+              <li>Derivation of non-linear differential equations for $y = (x + \sqrt{1+x^2})^m$.</li>
+              <li>Parity decomposition for odd/even $(y_n)_0$ evaluation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phase 3 Card -->
+        <div class="bg-white rounded-xl p-5 border-l-4 border-l-purple-600 border-y border-r border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2 py-0.5 bg-purple-100 text-purple-800 text-xs font-bold rounded">PHASE 3</span>
+            <span class="text-xs font-semibold text-slate-500">Weight: 25% • Exam Slot 3</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Mean Value Theorems & Series Expansions</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Fundamental theoretical theorems of differential calculus, Taylor and Maclaurin expansions, and indeterminate forms.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1 text-xs">
+            <div class="font-bold text-slate-800">Core Topics Covered:</div>
+            <ul class="list-disc list-inside text-slate-600 space-y-1">
+              <li>Rolle's Theorem, Lagrange's MVT, and Cauchy's Generalized MVT.</li>
+              <li>Trigonometric proofs derived from Cauchy MVT: $\frac{\sin b - \sin a}{\cos b - \cos a} = -\cot c$.</li>
+              <li>Taylor & Maclaurin series with Lagrange and Cauchy forms of remainder.</li>
+              <li>L'Hôpital's Rule for $\frac{0}{0}, \frac{\infty}{\infty}, 0 \cdot \infty, 1^\infty$ indeterminate limits.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Phase 4 Card -->
+        <div class="bg-white rounded-xl p-5 border-l-4 border-l-amber-600 border-y border-r border-slate-200 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded">PHASE 4</span>
+            <span class="text-xs font-semibold text-slate-500">Weight: 20% • Exam Slot 4</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Geometrical Invariants, Curvature & Asymptotes</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Application of calculus to plane curves, tangent intercept invariants, radius of curvature, and asymptotes of 3rd degree algebraic curves.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1 text-xs">
+            <div class="font-bold text-slate-800">Core Topics Covered:</div>
+            <ul class="list-disc list-inside text-slate-600 space-y-1">
+              <li>Astroid tangent invariant proof ($x^{2/3} + y^{2/3} = a^{2/3} \implies \text{Segment } AB = a$).</li>
+              <li>Curvature $\kappa$ and radius of curvature $\rho$ in Cartesian and polar coordinates.</li>
+              <li>Oblique asymptotes of cubic curves ($y = mx + c$) with distinct vs. repeated slope roots ($\phi_3'(m) = 0$).</li>
+              <li>Singular points classification: Nodes, Cusps, and Conjugate Points.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 2: 3D GEOMETRY & HESSIAN THEORY -->
+    <!-- ==================================================================== -->
+    <section id="tab-intuition" class="space-y-6 hidden">
+      
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full uppercase">Module 2.0</span>
+          <h2 class="text-xl font-bold text-slate-900">3D Surface Geometry & Hessian Theoretical Foundations</h2>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          In multivariable calculus, understanding the physical geometry of surfaces $z = f(x,y)$ connects physical spatial intuition with formal mathematical proofs. At critical points where the gradient vector vanishes $\nabla f(x,y) = (0,0)$, the surface possesses a horizontal tangent plane parallel to the $xy$-plane.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg mb-3">🏔️</div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">Mountain Peak & Basin</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              At a Local Maximum or Minimum, moving in any direction initially leaves elevation flat. Slope along every axis is zero.
+            </p>
+            <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-800">
+              $$\nabla f = \left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right) = (0,0)$$
+            </div>
+          </div>
+          <div class="mt-4 text-[11px] text-emerald-700 font-semibold bg-emerald-50 p-2 rounded">
+            ✔ Curvature is negative everywhere for Max, positive for Min.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg mb-3">🐎</div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">The Saddle Point</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              At a mountain pass (saddle point), moving front-to-back goes downhill, while moving left-to-right goes uphill!
+            </p>
+            <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-800">
+              $$f_x = 0, \quad f_y = 0$$
+              $$\text{Discriminant } D < 0$$
+            </div>
+          </div>
+          <div class="mt-4 text-[11px] text-amber-800 font-semibold bg-amber-50 p-2 rounded">
+            ⚠️ Surface curves upwards along one cross-section and downwards along another.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-lg mb-3">🗺️</div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">Level Curves & Gradient Rays</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Topographic maps display level curves $f(x,y) = c$. Gradient vector $\nabla f$ points perpendicular to contours in the steepest ascent direction.
+            </p>
+            <div class="bg-slate-50 p-2.5 rounded border border-slate-200 text-xs text-slate-800">
+              $$\|\nabla f\| = \text{Steepness}, \quad \nabla f \perp \text{Level Curves}$$
+            </div>
+          </div>
+          <div class="mt-4 text-[11px] text-purple-700 font-semibold bg-purple-50 p-2 rounded">
+            💡 Essential for Lagrange Multipliers: $\nabla f = \lambda \nabla g$.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hessian Derivation -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-lg font-bold text-slate-900 border-b border-slate-200 pb-2">Why Does the Hessian Discriminant Work? (2D Taylor Expansion Proof)</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Let $(a,b)$ be a critical point where $f_x(a,b) = 0$ and $f_y(a,b) = 0$. By multivariable Taylor Expansion:
+        </p>
+
+        <div class="math-display-box">
+          $$f(a+h, b+k) - f(a,b) = \frac{1}{2!} \left[ f_{xx}(a,b)h^2 + 2f_{xy}(a,b)hk + f_{yy}(a,b)k^2 \right] + R_2(h,k)$$
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+          The sign of local elevation change $\Delta f = f(a+h, b+k) - f(a,b)$ is governed by the quadratic form $Q(h,k) = Ah^2 + 2Bhk + Ck^2$, where $A = f_{xx}, B = f_{xy}, C = f_{yy}$. Multiplying by $A$:
+        </p>
+
+        <div class="math-display-box">
+          $$A \cdot Q(h,k) = A^2 h^2 + 2AB hk + AC k^2 = (Ah + Bk)^2 + (AC - B^2)k^2$$
+        </div>
+
+        <p class="text-xs text-slate-700 leading-relaxed">
+          Notice the key discriminant term $(AC - B^2) = f_{xx}f_{yy} - (f_{xy})^2 = D$!
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
+          <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+            <strong class="text-emerald-900 font-bold block mb-1">If $D > 0$:</strong>
+            Both terms are positive. The sign of $Q(h,k)$ is strictly determined by $A = f_{xx}$.<br>
+            • $f_{xx} > 0 \implies$ Local Minimum<br>
+            • $f_{xx} < 0 \implies$ Local Maximum
+          </div>
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+            <strong class="text-rose-900 font-bold block mb-1">If $D < 0$:</strong>
+            The term $(AC - B^2)$ is negative. $Q(h,k)$ takes both positive and negative values. Indicates a <strong>Saddle Point</strong>.
+          </div>
+          <div class="p-3 bg-slate-100 border border-slate-300 rounded-lg">
+            <strong class="text-slate-900 font-bold block mb-1">If $D = 0$:</strong>
+            The quadratic form collapses. Higher-order terms govern surface behavior. The test is <strong>Inconclusive</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Hessian Discriminant Calculator -->
+      <div class="bg-gradient-to-br from-slate-900 to-blue-950 rounded-xl p-6 text-white shadow-md">
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="px-2 py-0.5 bg-blue-500 text-white text-xs font-bold rounded">INTERACTIVE ENGINE</span>
+          <h3 class="text-base font-bold text-white">Dynamic Hessian Discriminant Engine</h3>
+        </div>
+        <p class="text-xs text-slate-300 mb-4">
+          Enter second partial derivative values $f_{xx}$, $f_{yy}$, and $f_{xy}$ at any critical point to instantly classify the point:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="block text-xs text-slate-300 font-medium mb-1">Partial Derivative $f_{xx}$</label>
+            <input type="number" id="calc-fxx" value="12" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-white focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-medium mb-1">Partial Derivative $f_{yy}$</label>
+            <input type="number" id="calc-fyy" value="12" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-white focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-medium mb-1">Mixed Derivative $f_{xy}$</label>
+            <input type="number" id="calc-fxy" value="-4" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded text-sm text-white focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <button onclick="calculateHessian()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded transition-colors uppercase tracking-wider">
+          Compute Discriminant $D$ & Classify Point
+        </button>
+
+        <div id="hessianResult" class="mt-4 p-4 rounded bg-slate-800 border border-slate-700 text-xs space-y-1">
+          <div><strong>Discriminant $D$:</strong> <span id="res-d" class="font-mono text-blue-400 font-bold">128</span></div>
+          <div><strong>Classification:</strong> <span id="res-class" class="font-bold text-emerald-400">Relative Minimum</span></div>
+          <div id="res-explain" class="text-slate-400 text-[11px] mt-1">$$D = (12)(12) - (-4)^2 = 144 - 16 = 128 > 0 \quad \text{and} \quad f_{xx} = 12 > 0$$</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 3: LECTURE SLIDES & NOTES REPOSITORY -->
+    <!-- ==================================================================== -->
+    <section id="tab-slides-notes" class="space-y-6 hidden">
+      
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full uppercase">Lecture Repository</span>
+          <h2 class="text-xl font-bold text-slate-900">Dr. Md. Rakib Hossain Lecture 15 & Slide Notes</h2>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Exhaustive worked solutions and notes for every example presented in the course slides. DU examiners award full step marks for complete algebraic steps—study these formatted solutions to guarantee full marks.
+        </p>
+      </div>
+
+      <!-- Problem Selector Buttons -->
+      <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm flex flex-wrap gap-2">
+        <button onclick="showSlideProblem('ex3')" id="btn-ex3" class="prob-btn px-3 py-1.5 text-xs font-bold rounded-lg bg-blue-600 text-white">
+          Ex 3: Polynomial Extrema
+        </button>
+        <button onclick="showSlideProblem('ex4')" id="btn-ex4" class="prob-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+          Ex 4: Monkey Saddle
+        </button>
+        <button onclick="showSlideProblem('ex5')" id="btn-ex5" class="prob-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+          Ex 5: Distance to Plane
+        </button>
+        <button onclick="showSlideProblem('ex6')" id="btn-ex6" class="prob-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+          Ex 6: Box Optimization
+        </button>
+        <button onclick="showSlideProblem('ex7')" id="btn-ex7" class="prob-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+          Ex 7: Bounded Rectangle
+        </button>
+        <button onclick="showSlideProblem('lagrange')" id="btn-lagrange" class="prob-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200">
+          Lagrange Ex 1: Constraint
+        </button>
+      </div>
+
+      <!-- Dynamic Solution Container Area -->
+      <div id="slideProblemContainer" class="space-y-4">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 4: DU 5-SLOT HISTORICAL PAST EXAM BLUEPRINT -->
+    <!-- ==================================================================== -->
+    <section id="tab-du-slots" class="space-y-6 hidden">
+      
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="px-2.5 py-1 bg-purple-100 text-purple-800 text-xs font-bold rounded-full uppercase">Module 4.0</span>
+          <h2 class="text-xl font-bold text-slate-900">DU 5-Slot Historical Exam Blueprint & Solved Questions</h2>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Historical analysis of University of Dhaka MATH 104 final examination papers reveals a consistent 5-slot structure. Master these solved question blueprints to maximize score efficiency.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Slot Weightage Chart -->
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">DU Exam Slot Mark Allocation</h3>
+          <div class="chart-container">
+            <canvas id="slotChart"></canvas>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2 text-center">
+            Historical point distribution across standard DU exam slots.
+          </p>
+        </div>
+
+        <!-- Detailed Blueprint Cards -->
+        <div class="lg:col-span-2 space-y-4">
+          
+          <!-- Slot 1 -->
+          <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-slate-900"><span class="step-badge">Slot 1</span> Limit Proofs via $\varepsilon-\delta$ Definition</h3>
+              <span class="exam-badge">High Frequency</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Standard DU Question: <em>"Prove by $\varepsilon-\delta$ definition that $\lim_{x \to 2} (x^2 + 3x) = 10$."</em>
+            </p>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">Step 1: Target Inequality Formulation:</strong><br>
+                For any $\varepsilon > 0$, we must find $\delta > 0$ such that if $0 < |x - 2| < \delta$, then $|(x^2 + 3x) - 10| < \varepsilon$.
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">Step 2: Factor & Bound Auxiliary Term:</strong><br>
+                $$|(x^2 + 3x) - 10| = |(x - 2)(x + 5)| = |x - 2| \cdot |x + 5|$$
+                Assume initial bound $\delta_0 = 1$. Then $0 < |x - 2| < 1 \implies 1 < x < 3$.<br>
+                Adding $5$: $6 < x + 5 < 8 \implies |x + 5| < 8$.
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">Step 3: Define Final Delta & Formal Conclusion:</strong><br>
+                $$|(x - 2)(x + 5)| < 8 |x - 2|$$
+                Set $8 |x - 2| = \varepsilon \implies |x - 2| = \frac{\varepsilon}{8}$.<br>
+                Therefore, choose $\delta = \min\left(1, \frac{\varepsilon}{8}\right)$. Q.E.D.
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 2 -->
+          <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-slate-900"><span class="step-badge">Slot 2</span> Leibniz Recurrence & $(y_n)_0$ Parity Evaluation</h3>
+              <span class="exam-badge">Must Solve</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Standard DU Question: <em>If $y = \left(x + \sqrt{1+x^2}\right)^m$, find $(y_n)_0$.</em>
+            </p>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">1. Derive Differential Equation:</strong><br>
+                $$y_1 = m\left(x + \sqrt{1+x^2}\right)^{m-1} \cdot \left(1 + \frac{x}{\sqrt{1+x^2}}\right) = \frac{m y}{\sqrt{1+x^2}}$$
+                Squaring both sides: $(1+x^2)y_1^2 = m^2 y^2$. Differentiating again yields:
+                $$(1+x^2)y_2 + x y_1 - m^2 y = 0$$
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">2. Apply Leibniz's Theorem $n$ times:</strong><br>
+                $$D^n[(1+x^2)y_2] + D^n[x y_1] - m^2 D^n[y] = 0$$
+                $$(1+x^2)y_{n+2} + (2n+1)x y_{n+1} + (n^2 - m^2)y_n = 0$$
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                <strong class="text-blue-700">3. Evaluate at $x = 0$ & Parity Cases:</strong><br>
+                Setting $x = 0 \implies (y_{n+2})_0 = (m^2 - n^2)(y_n)_0$.<br>
+                Base values: $y(0) = 1$, $y_1(0) = m$.<br>
+                • <strong>If $n$ is even:</strong> $(y_n)_0 = m^2(m^2 - 2^2)(m^2 - 4^2)\dots(m^2 - (n-2)^2)$.<br>
+                • <strong>If $n$ is odd:</strong> $(y_n)_0 = m(m^2 - 1^2)(m^2 - 3^2)\dots(m^2 - (n-2)^2)$.
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 3 -->
+          <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-base font-bold text-slate-900"><span class="step-badge">Slot 3</span> Mean Value Theorems & Trigonometric Proofs</h3>
+              <span class="exam-badge">Theoretical Proof</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong>Cauchy's Mean Value Theorem:</strong> If $f, g$ are continuous on $[a,b]$ and differentiable on $(a,b)$ with $g'(x) \neq 0$, then there exists $c \in (a,b)$ such that:
+            </p>
+            <div class="math-display-box">
+              $$\frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}$$
+            </div>
+            <p class="text-xs text-slate-600 mt-2">
+              <em>DU Classic Question Variant:</em> Setting $f(x) = \sin x$ and $g(x) = \cos x$ on $[a,b]$ proves that $\frac{\sin b - \sin a}{\cos b - \cos a} = -\cot c$.
+            </p>
+          </div>
+
+          <!-- Slots 4 & 5 Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1"><span class="step-badge">Slot 4</span> Astroid Tangent Invariant</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                For astroid $x^{2/3} + y^{2/3} = a^{2/3}$, tangent line equation is:
+                $$x \cos\theta + y \sin\theta = a \sin\theta \cos\theta$$
+                X-intercept $A = (a\cos^3\theta, 0)$, Y-intercept $B = (0, a\sin^3\theta)$.<br>
+                Length $AB = \sqrt{a^2\cos^6\theta + a^2\sin^6\theta + \dots} = a$ (Constant length)!
+              </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+              <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1"><span class="step-badge">Slot 5</span> Asymptotes of 3rd Degree Cubics</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                To find oblique asymptotes $y = mx + c$ for cubic $f(x,y) = 0$:<br>
+                1. Solve $\phi_3(m) = 0$ for slopes.<br>
+                2. If roots are distinct: $c = -\frac{\phi_2(m)}{\phi_3'(m)}$.<br>
+                3. <strong>If roots are repeated ($m_1 = m_2$):</strong> Use quadratic:
+                $$\frac{c^2}{2!}\phi_3''(m) + c\,\phi_2'(m) + \phi_1(m) = 0$$
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 5: STRATEGY & SELF-TEST QUIZ ENGINE -->
+    <!-- ==================================================================== -->
+    <section id="tab-exam-protocol" class="space-y-6 hidden">
+      
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="px-2.5 py-1 bg-rose-100 text-rose-800 text-xs font-bold rounded-full uppercase">Module 5.0</span>
+          <h2 class="text-xl font-bold text-slate-900">DU Exam Scoring Hacks & Interactive Self-Test Engine</h2>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Review the common mark-loss traps, follow the 72-hour cram timetable, and test your readiness using the interactive assessment engine below.
+        </p>
+      </div>
+
+      <!-- Point Loss Traps Grid -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-slate-900 border-b border-slate-200 pb-2">Top 4 Academic Point-Loss Traps</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+            <strong class="text-rose-900 font-bold block mb-1">1. Forgetting Boundary Filtering on Bounded Domains</strong>
+            In closed domain extrema problems (e.g. Slide Ex 7), candidates find interior critical points like $(1,1)$ and forget to verify if they lie inside $0 \le x \le 3, 0 \le y \le 2$. Points outside the domain MUST be explicitly discarded!
+          </div>
+
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+            <strong class="text-rose-900 font-bold block mb-1">2. Omitting Continuity & Differentiability Hypotheses</strong>
+            In Rolle's or Lagrange's MVT proofs, writing $f'(c) = 0$ without explicitly writing <em>"f(x) is continuous on [a,b] and differentiable on (a,b)"</em> costs 1.5 out of 5 marks immediately.
+          </div>
+
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+            <strong class="text-rose-900 font-bold block mb-1">3. Division by Zero in Repeated Asymptote Formulas</strong>
+            When $\phi_3'(m) = 0$, applying $c = -\frac{\phi_2}{\phi_3'}$ causes division by zero! You MUST switch to the quadratic equation in $c$.
+          </div>
+
+          <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+            <strong class="text-rose-900 font-bold block mb-1">4. Wrong Base Initial Value in Leibniz Recurrence</strong>
+            In $(y_n)_0$ problems, candidates mix up $y(0)$ and $y_1(0)$. Even orders $(y_{2k})_0$ start from $y(0)$; Odd orders $(y_{2k+1})_0$ start from $y_1(0)$.
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Assessment Quiz Engine -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+          <div>
+            <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs font-bold rounded">SELF-TEST ENGINE</span>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">DU MATH 104 Concept Assessment Quiz</h3>
+          </div>
+          <button onclick="resetQuiz()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded font-semibold transition-colors">
+            Reset Quiz
+          </button>
+        </div>
+
+        <div id="quizContainer" class="space-y-6">
+          <!-- Quiz questions rendered dynamically by JS -->
+        </div>
+
+        <div id="quizScoreBox" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-xl text-center space-y-1">
+          <div class="text-xs text-blue-700 font-bold uppercase tracking-wider">Your Test Score</div>
+          <div id="quizScoreText" class="text-2xl font-black text-blue-900">0 / 5</div>
+          <div id="quizFeedbackText" class="text-xs text-slate-600">Complete all questions above to evaluate your readiness.</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-auto py-5">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+      MATH 104 Differential Calculus • DU Master Interactive Study Portal • Department of Mathematics, University of Dhaka
+    </div>
+  </footer>
+
+  <!-- JavaScript Logic & KaTeX Renderer Integration -->
+  <script>
+    // Trigger KaTeX rendering across all math blocks
+    function renderMath() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Navigation Switch Logic
+    function switchTab(tabId) {
+      const tabs = ['roadmap', 'intuition', 'slides-notes', 'du-slots', 'exam-protocol'];
+      tabs.forEach(id => {
+        document.getElementById(`tab-${id}`).classList.add('hidden');
+        const desktopBtn = document.getElementById(`nav-${id}`);
+        const mobileBtn = document.getElementById(`mobile-nav-${id}`);
+        if (desktopBtn) desktopBtn.classList.remove('active');
+        if (mobileBtn) {
+          mobileBtn.classList.remove('bg-blue-100', 'text-blue-700', 'font-semibold');
+          mobileBtn.classList.add('bg-slate-100', 'text-slate-600');
+        }
+      });
+
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeDesktop = document.getElementById(`nav-${tabId}`);
+      const activeMobile = document.getElementById(`mobile-nav-${tabId}`);
+      if (activeDesktop) activeDesktop.classList.add('active');
+      if (activeMobile) {
+        activeMobile.classList.remove('bg-slate-100', 'text-slate-600');
+        activeMobile.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold');
+      }
+
+      if (tabId === 'du-slots' && !window.chartRendered) {
+        renderSlotChart();
+        window.chartRendered = true;
+      }
+
+      setTimeout(renderMath, 50);
+    }
+
+    // Dynamic Hessian Calculator logic
+    function calculateHessian() {
+      const fxx = parseFloat(document.getElementById('calc-fxx').value) || 0;
+      const fyy = parseFloat(document.getElementById('calc-fyy').value) || 0;
+      const fxy = parseFloat(document.getElementById('calc-fxy').value) || 0;
+
+      const D = (fxx * fyy) - (fxy * fxy);
+      const resD = document.getElementById('res-d');
+      const resClass = document.getElementById('res-class');
+      const resExplain = document.getElementById('res-explain');
+
+      resD.textContent = D;
+
+      if (D > 0) {
+        if (fxx > 0) {
+          resClass.textContent = "Relative Minimum";
+          resClass.className = "font-bold text-emerald-400";
+          resExplain.innerHTML = `$$D = (${fxx})(${fyy}) - (${fxy})^2 = ${D} > 0 \\quad \\text{and} \\quad f_{xx} = ${fxx} > 0 \\implies \\text{Local Minimum}$$`;
+        } else if (fxx < 0) {
+          resClass.textContent = "Relative Maximum";
+          resClass.className = "font-bold text-blue-400";
+          resExplain.innerHTML = `$$D = (${fxx})(${fyy}) - (${fxy})^2 = ${D} > 0 \\quad \\text{and} \\quad f_{xx} = ${fxx} < 0 \\implies \\text{Local Maximum}$$`;
+        } else {
+          resClass.textContent = "Inconclusive (f_xx = 0)";
+          resClass.className = "font-bold text-amber-400";
+          resExplain.innerHTML = `$$D > 0 \\text{ but } f_{xx} = 0$$`;
+        }
+      } else if (D < 0) {
+        resClass.textContent = "Saddle Point";
+        resClass.className = "font-bold text-rose-400";
+        resExplain.innerHTML = `$$D = (${fxx})(${fyy}) - (${fxy})^2 = ${D} < 0 \\implies \\text{Saddle Point}$$`;
+      } else {
+        resClass.textContent = "Inconclusive (D = 0)";
+        resClass.className = "font-bold text-slate-300";
+        resExplain.innerHTML = `$$D = 0 \\implies \\text{Inconclusive. Higher Taylor expansion required.}$$`;
+      }
+
+      renderMath();
+    }
+
+    // Comprehensive Slide Solutions Dataset (Lecture 15)
+    const slideProblems = {
+      'ex3': {
+        title: 'Slide Example 3: Classifying Critical Points of Polynomial Surface',
+        equation: 'f(x,y) = x^4 + y^4 - 4xy + 1',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: First Partial Derivatives & Simultaneous System</h4>
+              <p class="text-xs text-slate-700">Differentiating $f(x,y)$ with respect to $x$ and $y$:</p>
+              <div class="math-display-box">
+                $$f_x = \frac{\partial}{\partial x}(x^4 + y^4 - 4xy + 1) = 4x^3 - 4y = 0 \implies y = x^3$$
+              </div>
+              <div class="math-display-box">
+                $$f_y = \frac{\partial}{\partial y}(x^4 + y^4 - 4xy + 1) = 4y^3 - 4x = 0 \implies x = y^3$$
+              </div>
+              <p class="text-xs text-slate-700">Substituting $y = x^3$ into $x = y^3$:</p>
+              <div class="math-display-box">
+                $$x = (x^3)^3 = x^9 \implies x^9 - x = 0 \implies x(x^8 - 1) = 0 \implies x(x^4 - 1)(x^4 + 1) = 0$$
+                $$x(x^2 - 1)(x^2 + 1)(x^4 + 1) = 0 \implies x = 0, \, 1, \, -1$$
+              </div>
+              <p class="text-xs text-slate-700">Using $y = x^3$, the critical points are $(0,0)$, $(1,1)$, and $(-1,-1)$.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Second Partial Derivatives & Hessian Discriminant Formula</h4>
+              <div class="math-display-box">
+                $$f_{xx} = 12x^2, \quad f_{yy} = 12y^2, \quad f_{xy} = -4$$
+                $$D(x,y) = f_{xx}f_{yy} - (f_{xy})^2 = (12x^2)(12y^2) - (-4)^2 = 144x^2y^2 - 16$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Point-by-Point Classification</h4>
+              <div class="space-y-3 text-xs">
+                <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg">
+                  <strong>At Point $(0,0)$:</strong><br>
+                  $$D(0,0) = 144(0)^2(0)^2 - 16 = -16 < 0$$
+                  Result: <strong>Saddle Point</strong> at $(0,0)$ with elevation $f(0,0) = 1$.
+                </div>
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                  <strong>At Point $(1,1)$:</strong><br>
+                  $$D(1,1) = 144(1)^2(1)^2 - 16 = 128 > 0 \quad \text{and} \quad f_{xx}(1,1) = 12(1)^2 = 12 > 0$$
+                  Result: <strong>Local Minimum</strong> at $(1,1)$ with value $f(1,1) = 1 + 1 - 4 + 1 = -1$.
+                </div>
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                  <strong>At Point $(-1,-1)$:</strong><br>
+                  $$D(-1,-1) = 144(-1)^2(-1)^2 - 16 = 128 > 0 \quad \text{and} \quad f_{xx}(-1,-1) = 12(-1)^2 = 12 > 0$$
+                  Result: <strong>Local Minimum</strong> at $(-1,-1)$ with value $f(-1,-1) = -1$.
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'ex4': {
+        title: 'Slide Example 4: The Monkey Saddle Surface Analysis',
+        equation: 'f(x,y) = x^3 - 3xy^2 + 2',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: First Partial Derivatives & Critical Point Identification</h4>
+              <div class="math-display-box">
+                $$f_x = 3x^2 - 3y^2 = 3(x^2 - y^2) = 0 \implies x^2 = y^2$$
+                $$f_y = -6xy = 0 \implies x = 0 \quad \text{or} \quad y = 0$$
+              </div>
+              <p class="text-xs text-slate-700">If $x = 0 \implies y^2 = 0 \implies y = 0$. Critical point: $(0,0)$.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Second Partials & Inconclusive Hessian</h4>
+              <div class="math-display-box">
+                $$f_{xx} = 6x, \quad f_{yy} = -6x, \quad f_{xy} = -6y$$
+                $$\text{At } (0,0): \quad f_{xx} = 0, \quad f_{yy} = 0, \quad f_{xy} = 0 \implies D = (0)(0) - (0)^2 = 0$$
+              </div>
+              <p class="text-xs text-amber-800 font-semibold bg-amber-50 p-2 rounded border border-amber-200">
+                Since $D = 0$, the Hessian Discriminant test fails (Inconclusive). Direct surface analysis is required.
+              </p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Direct Algebraic Surface Inspection</h4>
+              <p class="text-xs text-slate-700">Along the line $y = 0$:</p>
+              <div class="math-display-box">
+                $$f(x,0) = x^3 + 2$$
+                $$\text{For } x > 0 \implies f(x,0) > 2, \quad \text{For } x < 0 \implies f(x,0) < 2$$
+              </div>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                Since $f(x,y)$ takes values both strictly greater than and strictly less than $f(0,0)=2$ in every open neighborhood of $(0,0)$, the point $(0,0)$ is a <strong>Monkey Saddle Point</strong>.
+              </p>
+            </div>
+          </div>
+        `
+      },
+      'ex5': {
+        title: 'Slide Example 5: Shortest Distance from Point to Plane',
+        equation: '\\text{Find shortest distance from } (1,0,-2) \\text{ to plane } x + 2y + z = 4',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: Formulate Square Distance Function</h4>
+              <p class="text-xs text-slate-700">Instead of minimizing distance $d$, minimize $d^2$ to simplify derivatives:</p>
+              <div class="math-display-box">
+                $$d^2 = f(x,y,z) = (x - 1)^2 + y^2 + (z + 2)^2$$
+              </div>
+              <p class="text-xs text-slate-700">From plane constraint $x + 2y + z = 4 \implies z + 2 = 6 - x - 2y$. Substituting:</p>
+              <div class="math-display-box">
+                $$g(x,y) = (x - 1)^2 + y^2 + (6 - x - 2y)^2$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Partial Derivatives & System Solution</h4>
+              <div class="math-display-box">
+                $$g_x = 2(x - 1) + 2(6 - x - 2y)(-1) = 4x + 4y - 14 = 0 \implies 2x + 2y = 7$$
+                $$g_y = 2y + 2(6 - x - 2y)(-2) = 4x + 10y - 24 = 0 \implies 2x + 5y = 12$$
+              </div>
+              <p class="text-xs text-slate-700">Subtracting equations:</p>
+              <div class="math-display-box">
+                $$3y = 5 \implies y = \frac{5}{3}, \quad x = \frac{11}{6}, \quad z = -\frac{7}{6}$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Distance Value Calculation</h4>
+              <div class="math-display-box">
+                $$\text{Minimum Distance } d = \frac{|1(1) + 2(0) + 1(-2) - 4|}{\sqrt{1^2 + 2^2 + 1^2}} = \frac{5}{\sqrt{6}}$$
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'ex6': {
+        title: 'Slide Example 6: Open Rectangular Box Volume Optimization',
+        equation: 'V(x,y,z) = xyz \\quad \\text{subject to cardboard area } xy + 2xz + 2yz = 12',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: Eliminate Variable $z$</h4>
+              <div class="math-display-box">
+                $$2z(x + y) = 12 - xy \implies z = \frac{12 - xy}{2(x + y)}$$
+                $$V(x,y) = \frac{12xy - x^2y^2}{2(x + y)}$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Differentiate & Solve</h4>
+              <div class="math-display-box">
+                $$\frac{\partial V}{\partial x} = 0 \implies x^2 + 2xy = 12$$
+                $$\frac{\partial V}{\partial y} = 0 \implies y^2 + 2xy = 12$$
+              </div>
+              <p class="text-xs text-slate-700">Since $x,y > 0 \implies x = y = 2\text{ m}$ and $z = 1\text{ m}$.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Maximum Volume</h4>
+              <div class="math-display-box">
+                $$V_{\max} = (2\text{ m}) \times (2\text{ m}) \times (1\text{ m}) = 4\text{ m}^3$$
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'ex7': {
+        title: 'Slide Example 7: Absolute Extrema on Closed Rectangular Domain',
+        equation: 'f(x,y) = 2 + 2x + 2y - x^2 - y^2 \\quad \\text{on } D = \\{(x,y) : 0 \\le x \\le 3, \\, 0 \\le y \\le 2\\}',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: Interior Point</h4>
+              <div class="math-display-box">
+                $$f_x = 2 - 2x = 0 \implies x = 1, \quad f_y = 2 - 2y = 0 \implies y = 1$$
+                $$f(1,1) = 2 + 2 + 2 - 1 - 1 = 4$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Boundary Paths ($L_1, L_2, L_3, L_4$)</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                <div class="p-2 bg-white border rounded">$L_1 (y=0): f(x,0) = 2+2x-x^2 \implies f(1,0)=3, f(3,0)=-1$</div>
+                <div class="p-2 bg-white border rounded">$L_2 (x=3): f(3,y) = -1+2y-y^2 \implies f(3,1)=0, f(3,2)=-1$</div>
+                <div class="p-2 bg-white border rounded">$L_3 (y=2): f(x,2) = 2+2x-x^2 \implies f(1,2)=3, f(3,2)=-1$</div>
+                <div class="p-2 bg-white border rounded">$L_4 (x=0): f(0,y) = 2+2y-y^2 \implies f(0,1)=3, f(0,0)=2$</div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Global Max & Min</h4>
+              <div class="math-display-box">
+                $$\text{Absolute Maximum} = 4 \quad \text{at } (1,1)$$
+                $$\text{Absolute Minimum} = -1 \quad \text{at } (3,0) \text{ and } (3,2)$$
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'lagrange': {
+        title: 'Lagrange Multipliers Example 1: Hyperbolic Constraint Optimization',
+        equation: '\\text{Minimize } f(x,y) = x^2 + y^2 \\quad \\text{subject to } g(x,y) = xy - 1 = 0',
+        content: `
+          <div class="space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 1: Gradient Vector System</h4>
+              <div class="math-display-box">
+                $$\nabla f = \lambda \nabla g \implies (2x, 2y) = \lambda (y, x)$$
+                $$2x = \lambda y \quad (1), \quad 2y = \lambda x \quad (2), \quad xy = 1 \quad (3)$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 2: Coordinate Solutions</h4>
+              <div class="math-display-box">
+                $$2x^2 = \lambda xy = \lambda, \quad 2y^2 = \lambda xy = \lambda \implies x^2 = y^2$$
+                $$\text{Since } xy = 1 \implies x = y = \pm 1 \implies \text{Points } (1,1) \text{ and } (-1,-1)$$
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <h4 class="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">Step 3: Minimum Value</h4>
+              <div class="math-display-box">
+                $$f(1,1) = 1^2 + 1^2 = 2, \quad f(-1,-1) = 2 \implies \text{Minimum Distance } d = \sqrt{2}$$
+              </div>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function showSlideProblem(key) {
+      const prob = slideProblems[key];
+      const container = document.getElementById('slideProblemContainer');
+
+      document.querySelectorAll('.prob-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-slate-100', 'text-slate-700');
+      });
+      const activeBtn = document.getElementById(`btn-${key}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-100', 'text-slate-700');
+        activeBtn.classList.add('bg-blue-600', 'text-white');
+      }
+
+      container.innerHTML = `
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+          <div class="border-b border-slate-200 pb-3">
+            <h3 class="text-lg font-bold text-slate-900">${prob.title}</h3>
+            <div class="math-display-box text-sm mt-2">$$${prob.equation}$$</div>
+          </div>
+          ${prob.content}
+        </div>
+      `;
+
+      renderMath();
+    }
+
+    // Chart.js Visualization
+    function renderSlotChart() {
+      const ctx = document.getElementById('slotChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Slot 1: Limits', 'Slot 2: Leibniz', 'Slot 3: MVTs', 'Slot 4: Tangents', 'Slot 5: Asymptotes'],
+          datasets: [{
+            label: 'DU Final Point Weight (%)',
+            data: [20, 25, 20, 15, 20],
+            backgroundColor: [
+              'rgba(37, 99, 235, 0.75)',
+              'rgba(5, 150, 105, 0.75)',
+              'rgba(147, 51, 234, 0.75)',
+              'rgba(217, 119, 6, 0.75)',
+              'rgba(220, 38, 38, 0.75)'
+            ],
+            borderColor: [
+              '#2563eb',
+              '#059669',
+              '#9333ea',
+              '#d97706',
+              '#dc2626'
+            ],
+            borderWidth: 1.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, max: 30, ticks: { callback: v => v + '%' } },
+            x: { ticks: { font: { size: 10 } } }
+          }
+        }
+      });
+    }
+
+    // Self-Test Assessment Quiz Dataset & Engine
+    const quizData = [
+      {
+        q: "In the 2D Taylor expansion proof of the Hessian, what expression defines the discriminant D?",
+        options: [
+          "f_xx + f_yy",
+          "f_xx * f_yy - (f_xy)^2",
+          "(f_xy)^2 - f_xx * f_yy",
+          "f_xx * f_xy - f_yy"
+        ],
+        correct: 1,
+        explain: "The Hessian discriminant is D = f_xx * f_yy - (f_xy)^2."
+      },
+      {
+        q: "For the Monkey Saddle surface f(x,y) = x^3 - 3xy^2 + 2 at (0,0), what is the Hessian result?",
+        options: [
+          "D > 0 (Local Minimum)",
+          "D < 0 (Saddle Point)",
+          "D = 0 (Inconclusive)",
+          "D > 0 (Local Maximum)"
+        ],
+        correct: 2,
+        explain: "At (0,0), all second partials vanish, giving D = 0. Direct inspection reveals a Monkey Saddle."
+      },
+      {
+        q: "When finding asymptotes for cubic curves with repeated slope roots (m1 = m2), which equation must be solved for c?",
+        options: [
+          "c = -phi_2(m) / phi_3'(m)",
+          "(c^2 / 2!) * phi_3''(m) + c * phi_2'(m) + phi_1(m) = 0",
+          "c = phi_3(m) / phi_1(m)",
+          "c^2 * phi_2(m) + c = 0"
+        ],
+        correct: 1,
+        explain: "When phi_3'(m) = 0, applying c = -phi_2/phi_3' leads to division by zero. You must use the quadratic in c."
+      },
+      {
+        q: "What is the length of the tangent segment intercepted between coordinate axes for the astroid x^(2/3) + y^(2/3) = a^(2/3)?",
+        options: [
+          "a / 2",
+          "a * sin(theta)",
+          "a (Constant length)",
+          "a^2"
+        ],
+        correct: 2,
+        explain: "The astroid tangent length between intercepts is constant and equals 'a'."
+      },
+      {
+        q: "In Lagrange's Multiplier method, what vector condition must be satisfied at constrained extrema?",
+        options: [
+          "grad f = lambda * grad g",
+          "grad f + grad g = 0",
+          "grad f . grad g = 0",
+          "grad f = grad g"
+        ],
+        correct: 0,
+        explain: "Gradient vectors must be parallel at constrained extrema: grad f = lambda * grad g."
+      }
+    ];
+
+    let userAnswers = Array(quizData.length).fill(null);
+
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = quizData.map((item, idx) => `
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3">
+          <div class="text-xs font-bold text-slate-900">
+            <span class="px-2 py-0.5 bg-blue-600 text-white rounded text-[10px] mr-1.5">Q${idx + 1}</span>
+            ${item.q}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            ${item.options.map((opt, oIdx) => `
+              <button onclick="selectAnswer(${idx}, ${oIdx})" id="q${idx}-opt${oIdx}" class="quiz-opt-btn p-2.5 text-left rounded border transition-colors ${userAnswers[idx] === oIdx ? 'bg-blue-600 text-white border-blue-600 font-semibold' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'}">
+                ${String.fromCharCode(65 + oIdx)}. ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="q${idx}-feedback" class="hidden text-[11px] p-2 rounded"></div>
+        </div>
+      `).join('');
+    }
+
+    function selectAnswer(qIdx, oIdx) {
+      userAnswers[qIdx] = oIdx;
+      renderQuiz();
+      evaluateQuiz();
+    }
+
+    function evaluateQuiz() {
+      const scoreBox = document.getElementById('quizScoreBox');
+      const scoreText = document.getElementById('quizScoreText');
+      const feedbackText = document.getElementById('quizFeedbackText');
+
+      let score = 0;
+      let answeredCount = 0;
+
+      quizData.forEach((item, idx) => {
+        const userAns = userAnswers[idx];
+        const feedbackEl = document.getElementById(`q${idx}-feedback`);
+        if (userAns !== null) {
+          answeredCount++;
+          feedbackEl.classList.remove('hidden');
+          if (userAns === item.correct) {
+            score++;
+            feedbackEl.className = "text-[11px] p-2 rounded bg-emerald-100 text-emerald-800 font-medium";
+            feedbackEl.textContent = `✔ Correct! ${item.explain}`;
+          } else {
+            feedbackEl.className = "text-[11px] p-2 rounded bg-rose-100 text-rose-800 font-medium";
+            feedbackEl.textContent = `✖ Incorrect. ${item.explain}`;
+          }
+        }
+      });
+
+      if (answeredCount > 0) {
+        scoreBox.classList.remove('hidden');
+        scoreText.textContent = `${score} / ${quizData.length}`;
+        if (score === 5) {
+          feedbackText.textContent = "Outstanding! You are 100% prepared for DU MATH 104!";
+        } else if (score >= 3) {
+          feedbackText.textContent = "Good progress! Review the missed questions above.";
+        } else {
+          feedbackText.textContent = "Review the slides and past slots to strengthen your core concepts.";
+        }
+      }
+    }
+
+    function resetQuiz() {
+      userAnswers = Array(quizData.length).fill(null);
+      document.getElementById('quizScoreBox').classList.add('hidden');
+      renderQuiz();
+    }
+
+    // Dom Initialization
+    document.addEventListener("DOMContentLoaded", function() {
+      showSlideProblem('ex3');
+      calculateHessian();
+      renderQuiz();
+      renderMath();
+    });
+  </script>
+</body>
+</html>

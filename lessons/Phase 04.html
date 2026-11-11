@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH 104: Differential Calculus — Phase 4 Masterclass</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- MathJax 3 Configuration for Textbook-Grade Formula Typesetting -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['base', 'ams', 'noerrors', 'noundefined']}
+            },
+            chtml: {
+                matchFontHeight: true
+            },
+            options: {
+                renderActions: {
+                    addMenu: []
+                },
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .math-font {
+            font-family: 'Merriweather', serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .math-callout {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+        }
+        .trap-callout {
+            border-left: 4px solid #dc2626;
+            background: #fef2f2;
+        }
+        .exam-callout {
+            border-left: 4px solid #059669;
+            background: #ecfdf5;
+        }
+        .real-life-callout {
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+        }
+        mjx-container {
+            margin: 0.4em 0 !important;
+            outline: none;
+        }
+        .nav-link.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-rose-100 selection:text-rose-900">
+
+    <!-- Header & University Badge -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-rose-700 text-white rounded-lg flex items-center justify-center font-bold text-xl shadow-md">
+                        &int;
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">ISRT DU Masterclass</span>
+                            <span class="text-xs font-semibold text-slate-500">First-Year B.S. Honours</span>
+                        </div>
+                        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">MATH 104: Differential Calculus</h1>
+                    </div>
+                </div>
+
+                <!-- Status Badges -->
+                <div class="hidden lg:flex items-center space-x-3 text-xs font-semibold">
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-md border border-slate-200">Phase 4: Multivariable Dynamics</span>
+                    <span class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-md border border-emerald-200">Incourse: ~25 M</span>
+                    <span class="bg-amber-50 text-amber-700 px-3 py-1.5 rounded-md border border-amber-200">Final: 70 M Total</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Sub-Bar -->
+        <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 py-1.5 text-xs font-medium text-slate-600 whitespace-nowrap">
+                <a href="#unit-4-1" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">4.1 Chain Rule (1 Variable)</a>
+                <a href="#unit-4-2" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">4.2 Chain Rule (2 Variables)</a>
+                <a href="#unit-4-3" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">4.3 Implicit Differentiation</a>
+                <a href="#self-assessment" class="px-3 py-1 rounded-md bg-rose-100 text-rose-800 hover:bg-rose-200 transition-colors font-bold">&Delta; Self-Assessment</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Learning Canvas -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+
+        <!-- INTRODUCTORY BANNER -->
+        <section class="bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-400 bg-rose-950/60 px-3 py-1 rounded-full border border-rose-800 inline-block mb-3">Academic Rigor & Departmental Standards</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">Phase 4: The Multivariable Chain Rule</h2>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Based on Lecture 13 and 14 materials [cite: 10], Phase 4 tackles the pinnacle of differential calculus for this course: The Multivariable Chain Rule. We will learn how to track rates of change through nested functions involving one or two independent variables using tree diagrams, and establish a powerful new shortcut for implicit differentiation.
+                </p>
+            </div>
+        </section>
+
+        <!-- UNIT 4.1 -->
+        <section id="unit-4-1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-rose-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 01</span>
+                    <span>&bull;</span>
+                    <span>Dynamic Paths</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 4.1: The Chain Rule (One Independent Variable)</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: The Ant on a Hot Plate</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    Imagine an ant walking across a metal plate. The temperature $w$ on the plate depends on the position $(x, y)$. However, the ant's position $(x, y)$ changes as time $t$ passes. If you want to know how fast the temperature the ant experiences is changing with respect to time ($dw/dt$), you must account for how temperature changes with $x$ and $y$, multiplied by how fast the ant is moving in those directions.
+                </p>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">Theorem 13.5: Chain Rule - One Independent Variable [cite: 10]</h3>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        Let $w = f(x, y)$, where $f$ is a differentiable function of $x$ and $y$. If $x = g(t)$ and $y = h(t)$, where $g$ and $h$ are differentiable functions of $t$, then $w$ is a differentiable function of $t$, and [cite: 10]:
+                    </p>
+                    <div class="text-center font-serif text-lg py-2">
+                        $$\frac{dw}{dt} = \frac{\partial w}{\partial x} \frac{dx}{dt} + \frac{\partial w}{\partial y} \frac{dy}{dt}$$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Example -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Example 3</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Let $w = x^2y - y^2$, where $x = \sin t$ and $y = e^t$. Find $dw/dt$ when $t = 0$ [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <p class="text-slate-700">By the Chain Rule for one independent variable:</p>
+                    <div class="text-center font-serif text-sm py-2">
+                        $$\frac{dw}{dt} = \frac{\partial w}{\partial x} \frac{dx}{dt} + \frac{\partial w}{\partial y} \frac{dy}{dt}$$
+                    </div>
+                    <p class="text-slate-700">Calculate the necessary derivatives [cite: 10]:</p>
+                    <ul class="list-disc list-inside text-slate-700 pl-4 space-y-1 font-serif">
+                        <li>$\frac{\partial w}{\partial x} = 2xy$</li>
+                        <li>$\frac{\partial w}{\partial y} = x^2 - 2y$</li>
+                        <li>$\frac{dx}{dt} = \cos t$</li>
+                        <li>$\frac{dy}{dt} = e^t$</li>
+                    </ul>
+                    <p class="text-slate-700 mt-2">Substitute these into the formula [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-2">
+                        $$\frac{dw}{dt} = (2xy)(\cos t) + (x^2 - 2y)(e^t)$$
+                    </div>
+                    <p class="text-slate-700 mt-2">When $t = 0$, we find the corresponding $x$ and $y$ values [cite: 10]:</p>
+                    <ul class="list-disc list-inside text-slate-700 pl-4 space-y-1 font-serif">
+                        <li>$x = \sin(0) = 0$</li>
+                        <li>$y = e^0 = 1$</li>
+                    </ul>
+                    <p class="text-slate-700 mt-2">Substitute $t=0, x=0, y=1$ into the derivative equation [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-2 font-bold text-rose-700">
+                        $$\frac{dw}{dt} = (2 \cdot 0 \cdot 1)(\cos 0) + (0^2 - 2 \cdot 1)(e^0) = 0 - 2 = -2$$
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 4.2 -->
+        <section id="unit-4-2" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-rose-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 02</span>
+                    <span>&bull;</span>
+                    <span>Complex Dependencies</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 4.2: The Chain Rule (Two Independent Variables)</h2>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">Theorem 13.6 [cite: 10]</h3>
+                <p>
+                    If $w$ depends on $x$ and $y$, and both $x$ and $y$ depend on two independent variables $s$ and $t$, the chain rule expands into partial derivatives for each independent variable [cite: 10].
+                </p>
+                
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mt-2 space-y-4">
+                    <p class="font-bold text-slate-800">Formal Definition [cite: 10]:</p>
+                    <p>Let $w = f(x, y)$, where $f$ is differentiable, and let $x = g(s, t)$ and $y = h(s, t)$ such that the first partial derivatives of $x$ and $y$ with respect to $s$ and $t$ exist. Then $\partial w/\partial s$ and $\partial w/\partial t$ exist and are given by:</p>
+                    <div class="text-center font-serif py-2">
+                        $$\frac{\partial w}{\partial s} = \frac{\partial w}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial w}{\partial y} \frac{\partial y}{\partial s}$$
+                    </div>
+                    <div class="text-center font-serif py-2">
+                        $$\frac{\partial w}{\partial t} = \frac{\partial w}{\partial x} \frac{\partial x}{\partial t} + \frac{\partial w}{\partial y} \frac{\partial y}{\partial t}$$
+                    </div>
+                </div>
+            </div>
+
+             <!-- Faculty Example -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Example 4</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Use the Chain Rule to find $\partial w/\partial s$ and $\partial w/\partial t$ for $w = 2xy$ where $x = s^2 + t^2$ and $y = s/t$ [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <p class="text-slate-700">First, compute the partial derivative with respect to $s$ [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$\frac{\partial w}{\partial s} = \frac{\partial w}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial w}{\partial y} \frac{\partial y}{\partial s}$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= (2y)(2s) + (2x)\left(\frac{1}{t}\right)$$
+                    </div>
+                    <p class="text-slate-700 mt-2">Substitute $x = s^2 + t^2$ and $y = s/t$ to express the answer entirely in terms of $s$ and $t$ [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= 4s\left(\frac{s}{t}\right) + \frac{2(s^2 + t^2)}{t}$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1 font-bold text-rose-700">
+                        $$= \frac{4s^2 + 2s^2 + 2t^2}{t} = \frac{6s^2 + 2t^2}{t}$$
+                    </div>
+
+                    <p class="text-slate-700 mt-4 border-t border-slate-100 pt-4">Next, compute the partial derivative with respect to $t$ [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$\frac{\partial w}{\partial t} = \frac{\partial w}{\partial x} \frac{\partial x}{\partial t} + \frac{\partial w}{\partial y} \frac{\partial y}{\partial t}$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= (2y)(2t) + (2x)\left(-\frac{s}{t^2}\right)$$
+                    </div>
+                    <p class="text-slate-700 mt-2">Substitute for $x$ and $y$ [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= 4t\left(\frac{s}{t}\right) - \frac{2s(s^2 + t^2)}{t^2}$$
+                    </div>
+                    <div class="text-center font-serif text-sm py-1 font-bold text-rose-700">
+                        $$= 4s - \frac{2s^3 + 2st^2}{t^2} = \frac{4st^2 - 2s^3 - 2st^2}{t^2} = \frac{2st^2 - 2s^3}{t^2}$$
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 4.3 -->
+        <section id="unit-4-3" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-rose-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 03</span>
+                    <span>&bull;</span>
+                    <span>Advanced Tools</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 4.3: Implicit Differentiation via Partial Derivatives</h2>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
+                 <p>
+                    In Phase 2, we used standard implicit differentiation to find $dy/dx$. The Multivariable Chain Rule provides an elegant shortcut [cite: 10].
+                </p>
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mt-2 space-y-4">
+                    <p class="font-bold text-slate-800">Theorem 13.7 [cite: 10]:</p>
+                    <p>If the equation $F(x, y) = 0$ defines $y$ implicitly as a differentiable function of $x$, then [cite: 10]:</p>
+                    <div class="text-center font-serif py-2">
+                        $$\frac{dy}{dx} = -\frac{F_x(x, y)}{F_y(x, y)}, \quad F_y(x, y) \neq 0$$
+                    </div>
+                    <p class="mt-4">Similarly, if $F(x, y, z) = 0$ defines $z$ implicitly as a function of $x$ and $y$, then [cite: 10]:</p>
+                    <div class="text-center font-serif py-2">
+                        $$\frac{\partial z}{\partial x} = -\frac{F_x(x, y, z)}{F_z(x, y, z)} \quad \text{and} \quad \frac{\partial z}{\partial y} = -\frac{F_y(x, y, z)}{F_z(x, y, z)}$$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Example: Implicit -->
+            <div class="exam-callout p-6 rounded-xl space-y-4 mt-6">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Example 6</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Find $dy/dx$ given $y^3 + y^2 - 5y - x^2 + 4 = 0$ [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Solution:</div>
+
+                    <p class="text-slate-700">Define the function $F(x, y) = y^3 + y^2 - 5y - x^2 + 4$ [cite: 10].</p>
+                    
+                    <p class="text-slate-700 mt-2">Compute the partial derivatives [cite: 10]:</p>
+                    <ul class="list-disc list-inside text-slate-700 pl-4 space-y-1 font-serif">
+                        <li>$F_x(x, y) = -2x$</li>
+                        <li>$F_y(x, y) = 3y^2 + 2y - 5$</li>
+                    </ul>
+                    
+                    <p class="text-slate-700 mt-2">Apply Theorem 13.7 [cite: 10]:</p>
+                    <div class="text-center font-serif text-sm py-1 overflow-x-auto font-bold text-rose-700">
+                        $$\frac{dy}{dx} = -\frac{F_x(x, y)}{F_y(x, y)} = -\frac{-2x}{3y^2 + 2y - 5} = \frac{2x}{3y^2 + 2y - 5}$$
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- SELF-ASSESSMENT PROBLEM SET -->
+        <section id="self-assessment" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-rose-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Active Recall</span>
+                    <span>&bull;</span>
+                    <span>Practice Problems</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">&Delta; Phase 4 Self-Assessment Problem Set</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Test your preparation with these multivariable chain rule problems based on Lecture 13 [cite: 10].</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Practice Q1 -->
+                <div class="border border-slate-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Practice Problem 1</span>
+                        <span class="text-xs text-slate-500">Implicit Partial Differentiation</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-800">
+                        Find $\frac{\partial z}{\partial x}$ and $\frac{\partial z}{\partial y}$ for the surface defined by $x^2 + y^2 + z^2 + xez - 5 = 0$.
+                    </p>
+                    <button onclick="toggleElement('sol-q1')" class="text-xs font-bold text-rose-600 hover:text-rose-800">+ Reveal Step-by-Step Solution</button>
+                    <div id="sol-q1" class="hidden p-4 bg-slate-50 rounded-lg text-xs sm:text-sm text-slate-700 space-y-2 border border-slate-200">
+                        <p><strong>Solution:</strong></p>
+                        <p>Define $F(x, y, z) = x^2 + y^2 + z^2 + xez - 5 = 0$. Note: Assuming $xez$ means $x \cdot e \cdot z$, or perhaps $x \cdot e^z$. Let's assume it is $x \cdot e^z$ based on standard calculus problems.</p>
+                        <p>Calculate partial derivatives:</p>
+                        <ul class="list-disc list-inside pl-4 font-serif">
+                            <li>$F_x = 2x + e^z$</li>
+                            <li>$F_y = 2y$</li>
+                            <li>$F_z = 2z + xe^z$</li>
+                        </ul>
+                        <p>Apply Theorem 13.7:</p>
+                        <div class="text-center font-serif font-bold text-rose-700">$$\frac{\partial z}{\partial x} = -\frac{F_x}{F_z} = -\frac{2x + e^z}{2z + xe^z}$$</div>
+                        <div class="text-center font-serif font-bold text-rose-700 mt-2">$$\frac{\partial z}{\partial y} = -\frac{F_y}{F_z} = -\frac{2y}{2z + xe^z}$$</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-bold text-slate-700">Institute of Statistical Research and Training (ISRT) &bull; University of Dhaka</p>
+            <p class="mt-1">MATH 104 Differential Calculus &bull; First-Year B.S. Honours &bull; Interactive Academic Masterclass</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+        // Collapsible element helper
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([el]);
+                }
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH 104: Differential Calculus — Phase 1 Masterclass</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- MathJax 3 Configuration for Textbook-Grade Formula Typesetting -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['base', 'ams', 'noerrors', 'noundefined']}
+            },
+            chtml: {
+                matchFontHeight: true
+            },
+            options: {
+                renderActions: {
+                    addMenu: []
+                },
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .math-font {
+            font-family: 'Merriweather', serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .math-callout {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+        }
+        .trap-callout {
+            border-left: 4px solid #dc2626;
+            background: #fef2f2;
+        }
+        .exam-callout {
+            border-left: 4px solid #059669;
+            background: #ecfdf5;
+        }
+        .real-life-callout {
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+        }
+        mjx-container {
+            margin: 0.4em 0 !important;
+            outline: none;
+        }
+        .nav-link.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- Header & University Badge -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-700 text-white rounded-lg flex items-center justify-center font-bold text-xl shadow-md">
+                        &int;
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">ISRT DU Masterclass</span>
+                            <span class="text-xs font-semibold text-slate-500">First-Year B.S. Honours</span>
+                        </div>
+                        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">MATH 104: Differential Calculus</h1>
+                    </div>
+                </div>
+
+                <!-- Status Badges -->
+                <div class="hidden lg:flex items-center space-x-3 text-xs font-semibold">
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-md border border-slate-200">Phase 1: Limits & Continuity</span>
+                    <span class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-md border border-emerald-200">Incourse: ~25 M</span>
+                    <span class="bg-amber-50 text-amber-700 px-3 py-1.5 rounded-md border border-amber-200">Final: 70 M Total</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Sub-Bar -->
+        <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 py-1.5 text-xs font-medium text-slate-600 whitespace-nowrap">
+                <a href="#unit-1-1" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">1.1 Functions & Graphs</a>
+                <a href="#unit-1-2" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">1.2 Limit Theorems</a>
+                <a href="#unit-1-3" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">1.3 Continuity & Differentiability</a>
+                <a href="#unit-1-4" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">1.4 Difference Quotients</a>
+                <a href="#unit-1-5" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">1.5 Reference Sheet</a>
+                <a href="#self-assessment" class="px-3 py-1 rounded-md bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition-colors font-bold">&Delta; Self-Assessment</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Learning Canvas -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+
+        <!-- INTRODUCTORY BANNER -->
+        <section class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-800 inline-block mb-3">Academic Rigor & Departmental Standards</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">Phase 1: Functions, Limits, & Continuity</h2>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Welcome to MATH 104, based on the lectures of Dr. Md. Rakib Hossain [cite: 9]. This phase establishes the rigorous foundation of real-valued functions, limit evaluation techniques, and the critical distinctions between continuity and differentiability required for the First-Year B.S. Honours examinations at the Institute of Statistical Research and Training (ISRT).
+                </p>
+            </div>
+        </section>
+
+        <!-- UNIT 1.1 -->
+        <section id="unit-1-1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 01</span>
+                    <span>&bull;</span>
+                    <span>Foundations</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 1.1: Functions, Domains, and Symmetry</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Unique Outputs</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    A function from set $X$ into set $Y$ is a relation that associates each element of $X$ with exactly one element of $Y$ [cite: 9]. Think of a function as a well-calibrated machine: if you input the number of calories in a specific fast-food sandwich, it outputs a single, definitive fat content [cite: 9]. If one input could magically produce two different outputs simultaneously, the system would break&mdash;this is why the equation $x^2 + y^2 = 1$ (a circle) fails the vertical line test and is not a function [cite: 9].
+                </p>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-6">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Domain & Range</span>
+                        <p class="text-slate-600 leading-relaxed">The domain is the set of all valid inputs ($x$). Restrictions occur when dividing by zero or taking even roots of negative numbers. For $h(t) = \sqrt{4-3t}$, we require $4-3t \ge 0$, so $t \le 4/3$ [cite: 9].</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Even Functions</span>
+                        <p class="text-slate-600 leading-relaxed">A function $f$ is even if for every $x$ in its domain, $f(-x) = f(x)$ [cite: 9]. The graph is perfectly symmetric with respect to the y-axis [cite: 9].</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Odd Functions</span>
+                        <p class="text-slate-600 leading-relaxed">A function $f$ is odd if for every $x$ in its domain, $f(-x) = -f(x)$ [cite: 9]. The graph is symmetric with respect to the origin [cite: 9].</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examiner Traps -->
+            <div class="trap-callout p-5 rounded-xl space-y-2">
+                <h4 class="text-sm font-bold text-red-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block"></span>
+                    <span>Examiner Trap & Memory Trick: The "Neither" Trap</span>
+                </h4>
+                <div class="text-xs sm:text-sm text-red-900 space-y-2">
+                    <p>
+                        When asked to determine if a function is even or odd, do not assume it must be one of the two! For example, $g(x) = x^3 - 1$ yields $g(-x) = (-x)^3 - 1 = -x^3 - 1$. This is neither $g(x)$ nor $-g(x)$ [cite: 9]. Always explicitly evaluate $f(-x)$ step-by-step to claim it is "neither even nor odd" [cite: 9].
+                    </p>
+                </div>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 1.1.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT First Incourse Examination 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 2 & 3</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-2">
+                    <p class="font-bold">Question:</p>
+                    <p>1. Find the domain and range of: (a) $f(x) = 2 + \sqrt{x-1}$, (b) $f(x) = (x+1)/(x-1)$ [cite: 10].</p>
+                    <p>2. Suppose that the function $f$ has domain all real numbers. Determine whether each function can be classified as even or odd. Explain. (a) $g(x) = \frac{f(x)+f(-x)}{2}$, (b) $h(x) = \frac{f(x)-f(-x)}{2}$ [cite: 10].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+                    
+                    <div>
+                        <strong class="text-slate-900">Part 1: Domains and Ranges</strong>
+                        <div class="space-y-3 mt-2">
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>(a) $f(x) = 2 + \sqrt{x-1}$</strong>
+                                <p class="mt-1"><strong>Domain:</strong> The expression under the square root must be non-negative. $x - 1 \ge 0 \implies x \ge 1$. Domain = $[1, \infty)$.</p>
+                                <p class="mt-1"><strong>Range:</strong> Since $\sqrt{x-1} \ge 0$ for all valid $x$, $f(x) \ge 2 + 0 = 2$. Range = $[2, \infty)$.</p>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>(b) $f(x) = \frac{x+1}{x-1}$</strong>
+                                <p class="mt-1"><strong>Domain:</strong> The denominator cannot be zero. $x - 1 \neq 0 \implies x \neq 1$. Domain = $(-\infty, 1) \cup (1, \infty)$.</p>
+                                <p class="mt-1"><strong>Range:</strong> Let $y = \frac{x+1}{x-1}$. Solving for $x$: $yx - y = x+1 \implies x(y-1) = y+1 \implies x = \frac{y+1}{y-1}$. For $x$ to exist, $y - 1 \neq 0 \implies y \neq 1$. Range = $(-\infty, 1) \cup (1, \infty)$.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <strong class="text-slate-900">Part 2: Even / Odd Classification</strong>
+                        <p class="mt-1 text-slate-700">Substitute $-x$ into both defined functions to check symmetry properties:</p>
+                        
+                        <div class="space-y-3 mt-2">
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>(a) $g(x) = \frac{f(x)+f(-x)}{2}$</strong>
+                                <div class="text-center font-serif text-sm py-1">
+                                    $$g(-x) = \frac{f(-x)+f(-(-x))}{2} = \frac{f(-x)+f(x)}{2} = g(x)$$
+                                </div>
+                                <p class="text-slate-700">Since $g(-x) = g(x)$, the function $g(x)$ is strictly <strong>Even</strong>.</p>
+                            </div>
+                            
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>(b) $h(x) = \frac{f(x)-f(-x)}{2}$</strong>
+                                <div class="text-center font-serif text-sm py-1">
+                                    $$h(-x) = \frac{f(-x)-f(-(-x))}{2} = \frac{f(-x)-f(x)}{2} = -\left(\frac{f(x)-f(-x)}{2}\right) = -h(x)$$
+                                </div>
+                                <p class="text-slate-700">Since $h(-x) = -h(x)$, the function $h(x)$ is strictly <strong>Odd</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 1.2 -->
+        <section id="unit-1-2" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 02</span>
+                    <span>&bull;</span>
+                    <span>Evaluation</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 1.2: Limit Theorems & Indeterminate Forms</h2>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine: Algebraic Manipulations</h3>
+                
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    When direct substitution yields $0/0$ or $\infty/\infty$, algebraic manipulation (factoring, rationalizing) or L'H&ocirc;pital's rule is required. For limits approaching infinity for rational functions, divide the numerator and denominator by the highest power of $x$ present in the denominator.
+                </p>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 1.2.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT First Incourse Examination 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 5</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Find the following limits [cite: 10]:</p>
+                    <p>(a) $\lim_{x \to 1} \frac{x-1}{\sqrt{x}-1}$</p>
+                    <p>(b) $\lim_{x \to \infty} \frac{\sqrt{x^2+2}}{3x-6}$</p>
+                    <p>(c) $\lim_{x \to 0} \frac{\sin^2(kx)}{x^2}, k \neq 0$</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+
+                    <!-- Sub 1 -->
+                    <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1">
+                        <strong class="text-slate-900">(a) $\lim_{x \to 1} \frac{x-1}{\sqrt{x}-1}$</strong>
+                        <p class="text-slate-700">Direct substitution yields $\frac{0}{0}$. Multiply the numerator and denominator by the conjugate of the denominator, $(\sqrt{x}+1)$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$= \lim_{x \to 1} \frac{(x-1)(\sqrt{x}+1)}{(\sqrt{x}-1)(\sqrt{x}+1)} = \lim_{x \to 1} \frac{(x-1)(\sqrt{x}+1)}{x-1}$$
+                        </div>
+                        <p class="text-slate-700">Cancel the common factor $(x-1)$ since $x \to 1$ but $x \neq 1$:</p>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$= \lim_{x \to 1} (\sqrt{x}+1) = \sqrt{1} + 1 = 2$$
+                        </div>
+                    </div>
+
+                    <!-- Sub 2 -->
+                    <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1">
+                        <strong class="text-slate-900">(b) $\lim_{x \to \infty} \frac{\sqrt{x^2+2}}{3x-6}$</strong>
+                        <p class="text-slate-700">Divide the numerator and denominator by $x$ (which is equal to $\sqrt{x^2}$ for $x>0$):</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$= \lim_{x \to \infty} \frac{\frac{\sqrt{x^2+2}}{x}}{\frac{3x-6}{x}} = \lim_{x \to \infty} \frac{\sqrt{\frac{x^2+2}{x^2}}}{3 - \frac{6}{x}} = \lim_{x \to \infty} \frac{\sqrt{1 + \frac{2}{x^2}}}{3 - \frac{6}{x}}$$
+                        </div>
+                        <p class="text-slate-700">As $x \to \infty$, terms with $x$ in the denominator approach 0:</p>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$= \frac{\sqrt{1 + 0}}{3 - 0} = \frac{1}{3}$$
+                        </div>
+                    </div>
+
+                    <!-- Sub 3 -->
+                    <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1">
+                        <strong class="text-slate-900">(c) $\lim_{x \to 0} \frac{\sin^2(kx)}{x^2}$</strong>
+                        <p class="text-slate-700">Rewrite the expression using exponent properties:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$= \lim_{x \to 0} \left(\frac{\sin(kx)}{x}\right)^2$$
+                        </div>
+                        <p class="text-slate-700">Multiply the numerator and denominator inside the parenthesis by $k$ to utilize the standard limit $\lim_{\theta \to 0} \frac{\sin\theta}{\theta} = 1$:</p>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$= \lim_{x \to 0} \left(k \cdot \frac{\sin(kx)}{kx}\right)^2 = (k \cdot 1)^2 = k^2$$
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 1.3 -->
+        <section id="unit-1-3" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 03</span>
+                    <span>&bull;</span>
+                    <span>Smoothness</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 1.3: Continuity and Differentiability</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Corners vs Curves</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    Continuity means a path is unbroken&mdash;you can trace it without lifting your pencil. Differentiability is stricter: it requires the path to be <strong>smooth</strong>. The absolute value function $y = |x|$ is perfectly continuous at $x=0$, but it has a sharp "corner" there [cite: 5]. At that exact moment, the trajectory abruptly changes direction, meaning it has no single, defined tangent line (instantaneous velocity). Thus, it is continuous, but not differentiable.
+                </p>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine: Differentiability Proofs</h3>
+                
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    To prove a function $f(x)$ is not differentiable at $x=c$, we evaluate the left-hand derivative (LHD) and right-hand derivative (RHD) using the limit definition, and show they are not equal.
+                </p>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 1.3.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT Second Incourse Examination 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 3</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>The graph of $y = |x|$ has a corner at $x = 0$, which implies that $f(x) = |x|$ is not differentiable at $x = 0$. Prove that $f(x) = |x|$ is not differentiable at $x = 0$ by showing that the limit does not exist at $x = 0$ [cite: 5].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+
+                    <div>
+                        <p class="text-slate-700">By definition, the derivative of $f(x)$ at $x=0$ is given by the limit:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$f'(0) = \lim_{h \to 0} \frac{f(0+h) - f(0)}{h} = \lim_{h \to 0} \frac{|h| - 0}{h} = \lim_{h \to 0} \frac{|h|}{h}$$
+                        </div>
+                        
+                        <p class="mt-3 text-slate-700">We must evaluate the one-sided limits to determine if the general limit exists.</p>
+                        
+                        <div class="space-y-3 mt-2">
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>Right-Hand Derivative (RHD):</strong> Let $h \to 0^+$. Since $h > 0$, $|h| = h$.
+                                <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                                    $$\lim_{h \to 0^+} \frac{|h|}{h} = \lim_{h \to 0^+} \frac{h}{h} = \lim_{h \to 0^+} 1 = 1$$
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <strong>Left-Hand Derivative (LHD):</strong> Let $h \to 0^-$. Since $h < 0$, $|h| = -h$.
+                                <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                                    $$\lim_{h \to 0^-} \frac{|h|}{h} = \lim_{h \to 0^-} \frac{-h}{h} = \lim_{h \to 0^-} -1 = -1$$
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="mt-3 text-slate-700 font-bold">Conclusion:</p>
+                        <p class="text-slate-700">Since the Left-Hand Derivative ($-1$) $\neq$ Right-Hand Derivative ($1$), the limit $\lim_{h \to 0} \frac{|h|}{h}$ does not exist. Therefore, $f(x) = |x|$ is not differentiable at $x=0$.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 1.3.2 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT First Incourse Examination 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 7</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>Find values of the constants $k$ and $m$, if possible, that will make the function $f$ continuous everywhere [cite: 10].</p>
+                    <div class="text-center font-serif text-sm py-2">
+                        $$f(x) = \begin{cases} x^2 + 5, & x > 2 \\ m(x+1) + k, & -1 < x \le 2 \\ 2x^3 + x + 7, & x \le -1 \end{cases}$$
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+                    
+                    <p class="text-slate-700">For $f(x)$ to be continuous everywhere, it must be continuous at the piece transition points $x = 2$ and $x = -1$. This requires the left-hand limit (LHL) to equal the right-hand limit (RHL) at both points.</p>
+
+                    <div class="space-y-4 mt-2">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <strong>Continuity at $x = 2$:</strong>
+                            <div class="text-center font-serif text-sm py-1">
+                                $$\text{RHL: } \lim_{x \to 2^+} f(x) = \lim_{x \to 2^+} (x^2 + 5) = 2^2 + 5 = 9$$
+                            </div>
+                            <div class="text-center font-serif text-sm py-1">
+                                $$\text{LHL: } \lim_{x \to 2^-} f(x) = \lim_{x \to 2^-} (m(x+1) + k) = m(2+1) + k = 3m + k$$
+                            </div>
+                            <p class="mt-1 text-slate-700">Equating LHL and RHL gives our first equation:</p>
+                            <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                                $$3m + k = 9 \quad \text{--- (Equation 1)}$$
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <strong>Continuity at $x = -1$:</strong>
+                            <div class="text-center font-serif text-sm py-1">
+                                $$\text{RHL: } \lim_{x \to -1^+} f(x) = \lim_{x \to -1^+} (m(x+1) + k) = m(-1+1) + k = k$$
+                            </div>
+                            <div class="text-center font-serif text-sm py-1">
+                                $$\text{LHL: } \lim_{x \to -1^-} f(x) = \lim_{x \to -1^-} (2x^3 + x + 7) = 2(-1)^3 + (-1) + 7 = -2 - 1 + 7 = 4$$
+                            </div>
+                            <p class="mt-1 text-slate-700">Equating LHL and RHL gives our second equation:</p>
+                            <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                                $$k = 4 \quad \text{--- (Equation 2)}$$
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <strong>Solving the System:</strong>
+                            <p class="mt-1 text-slate-700">Substitute $k = 4$ into Equation 1:</p>
+                            <div class="text-center font-serif text-sm py-1">
+                                $$3m + 4 = 9 \implies 3m = 5 \implies m = \frac{5}{3}$$
+                            </div>
+                            <p class="mt-2 text-slate-700 font-bold">Final Answer: $k = 4, m = \frac{5}{3}$.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 1.4 -->
+        <section id="unit-1-4" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 04</span>
+                    <span>&bull;</span>
+                    <span>Core Tools</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 1.4: The Difference Quotient</h2>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine</h3>
+                
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    The difference quotient of a function $f$ at $x$ is defined as [cite: 9]:
+                </p>
+                <div class="text-center font-serif text-base py-2">
+                    $$\frac{f(x+h) - f(x)}{h}, \quad h \neq 0$$
+                </div>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    This quotient is the fundamental algebraic block used in calculus to define the derivative, mapping seamlessly to the slope of a secant line [cite: 9]. Simplifying it requires rigorous algebraic manipulation to safely cancel the $h$ parameter in the denominator.
+                </p>
+            </div>
+
+            <!-- Lecture Example -->
+            <div class="math-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-blue-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-800">Faculty Lecture Standard</span>
+                    <span class="text-xs font-mono font-bold text-blue-900 bg-blue-200/60 px-2 py-0.5 rounded">Example 8c</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-blue-950 space-y-1">
+                    <p class="font-bold">Find the difference quotient of the function $f(x) = \sqrt{x}$ [cite: 9]:</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-blue-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <p class="text-slate-700">Set up the difference quotient formula:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= \frac{\sqrt{x+h} - \sqrt{x}}{h}$$
+                    </div>
+                    <p class="text-slate-700">Rationalize the numerator by multiplying the numerator and denominator by the conjugate $(\sqrt{x+h} + \sqrt{x})$ [cite: 9]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= \frac{\sqrt{x+h} - \sqrt{x}}{h} \cdot \frac{\sqrt{x+h} + \sqrt{x}}{\sqrt{x+h} + \sqrt{x}}$$
+                    </div>
+                    <p class="text-slate-700">Apply the difference of squares $(A-B)(A+B) = A^2 - B^2$ [cite: 9]:</p>
+                    <div class="text-center font-serif text-sm py-1">
+                        $$= \frac{(\sqrt{x+h})^2 - (\sqrt{x})^2}{h(\sqrt{x+h} + \sqrt{x})} = \frac{x+h-x}{h(\sqrt{x+h} + \sqrt{x})}$$
+                    </div>
+                    <p class="text-slate-700">Simplify and divide out the factor $h$ [cite: 9]:</p>
+                    <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                        $$= \frac{h}{h(\sqrt{x+h} + \sqrt{x})} = \frac{1}{\sqrt{x+h} + \sqrt{x}}$$
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 1.5: SUMMARY REFERENCE SHEET -->
+        <section id="unit-1-5" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Quick Review</span>
+                    <span>&bull;</span>
+                    <span>Exam Reference</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 1.5: Phase 1 Summary Reference Sheet</h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+                            <th class="p-3 w-1/4">Concept</th>
+                            <th class="p-3 w-1/2">Core Formula / Technique</th>
+                            <th class="p-3 w-1/4">Citation Note</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Even Function</td>
+                            <td class="p-3 font-serif">$f(-x) = f(x)$, symmetric to y-axis</td>
+                            <td class="p-3 text-slate-500">[cite: 9]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Odd Function</td>
+                            <td class="p-3 font-serif">$f(-x) = -f(x)$, symmetric to origin</td>
+                            <td class="p-3 text-slate-500">[cite: 9]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Difference Quotient</td>
+                            <td class="p-3 font-serif">$\frac{f(x+h) - f(x)}{h}$</td>
+                            <td class="p-3 text-slate-500">[cite: 9]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Continuous at $x=c$</td>
+                            <td class="p-3 font-serif">$\lim_{x \to c^-} f(x) = \lim_{x \to c^+} f(x) = f(c)$</td>
+                            <td class="p-3 text-slate-500">[cite: 10]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Derivative at $x=a$</td>
+                            <td class="p-3 font-serif">$f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$</td>
+                            <td class="p-3 text-slate-500">[cite: 5]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SELF-ASSESSMENT PROBLEM SET -->
+        <section id="self-assessment" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Active Recall</span>
+                    <span>&bull;</span>
+                    <span>Practice Problems</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">&Delta; Phase 1 Self-Assessment Problem Set</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Test your preparation with problems modeled on past ISRT examination questions.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Practice Q1 -->
+                <div class="border border-slate-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Practice Problem 1</span>
+                        <span class="text-xs text-slate-500">Difference Quotient [cite: 9]</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-800">
+                        Find and fully simplify the difference quotient for $f(x) = 2x^2 - 3x$ [cite: 9].
+                    </p>
+                    <button onclick="toggleElement('sol-q1')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">+ Reveal Step-by-Step Solution</button>
+                    <div id="sol-q1" class="hidden p-4 bg-slate-50 rounded-lg text-xs sm:text-sm text-slate-700 space-y-2 border border-slate-200">
+                        <p><strong>Solution:</strong></p>
+                        <div class="text-center font-serif">$$=\frac{[2(x+h)^2 - 3(x+h)] - [2x^2 - 3x]}{h}$$</div>
+                        <div class="text-center font-serif">$$=\frac{2(x^2 + 2xh + h^2) - 3x - 3h - 2x^2 + 3x}{h}$$</div>
+                        <div class="text-center font-serif">$$=\frac{2x^2 + 4xh + 2h^2 - 3x - 3h - 2x^2 + 3x}{h}$$</div>
+                        <div class="text-center font-serif">$$=\frac{4xh + 2h^2 - 3h}{h} = \frac{h(4x + 2h - 3)}{h}$$</div>
+                        <div class="text-center font-serif font-bold text-indigo-700">$$= 4x + 2h - 3$$</div>
+                    </div>
+                </div>
+
+                <!-- Practice Q2 -->
+                <div class="border border-slate-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Practice Problem 2</span>
+                        <span class="text-xs text-slate-500">Limits at Infinity [cite: 7]</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-800">
+                        Find the limit: $\lim_{x \to +\infty} \frac{7 - 6x^5}{x + 3}$ [cite: 7].
+                    </p>
+                    <button onclick="toggleElement('sol-q2')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">+ Reveal Step-by-Step Solution</button>
+                    <div id="sol-q2" class="hidden p-4 bg-slate-50 rounded-lg text-xs sm:text-sm text-slate-700 space-y-2 border border-slate-200">
+                        <p><strong>Solution:</strong></p>
+                        <p>Divide numerator and denominator by $x$ (the highest power in the denominator):</p>
+                        <div class="text-center font-serif">$$= \lim_{x \to +\infty} \frac{\frac{7}{x} - 6x^4}{1 + \frac{3}{x}}$$</div>
+                        <p>As $x \to +\infty$, the terms $7/x$ and $3/x$ approach 0. However, the term $-6x^4$ grows without bound in the negative direction.</p>
+                        <div class="text-center font-serif font-bold text-indigo-700">$$= -\infty$$</div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-bold text-slate-700">Institute of Statistical Research and Training (ISRT) &bull; University of Dhaka</p>
+            <p class="mt-1">MATH 104 Differential Calculus &bull; First-Year B.S. Honours &bull; Interactive Academic Masterclass</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+        // Collapsible element helper
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([el]);
+                }
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

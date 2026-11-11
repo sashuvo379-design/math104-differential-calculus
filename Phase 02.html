@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH 104: Differential Calculus — Phase 2 Masterclass</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- MathJax 3 Configuration for Textbook-Grade Formula Typesetting -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                packages: {'[+]': ['base', 'ams', 'noerrors', 'noundefined']}
+            },
+            chtml: {
+                matchFontHeight: true
+            },
+            options: {
+                renderActions: {
+                    addMenu: []
+                },
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .math-font {
+            font-family: 'Merriweather', serif;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .math-callout {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+        }
+        .trap-callout {
+            border-left: 4px solid #dc2626;
+            background: #fef2f2;
+        }
+        .exam-callout {
+            border-left: 4px solid #059669;
+            background: #ecfdf5;
+        }
+        .real-life-callout {
+            border-left: 4px solid #d97706;
+            background: #fffbeb;
+        }
+        mjx-container {
+            margin: 0.4em 0 !important;
+            outline: none;
+        }
+        .nav-link.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+
+    <!-- Header & University Badge -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-indigo-700 text-white rounded-lg flex items-center justify-center font-bold text-xl shadow-md">
+                        &int;
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">ISRT DU Masterclass</span>
+                            <span class="text-xs font-semibold text-slate-500">First-Year B.S. Honours</span>
+                        </div>
+                        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">MATH 104: Differential Calculus</h1>
+                    </div>
+                </div>
+
+                <!-- Status Badges -->
+                <div class="hidden lg:flex items-center space-x-3 text-xs font-semibold">
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-md border border-slate-200">Phase 2: Derivatives & Applications</span>
+                    <span class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-md border border-emerald-200">Incourse: ~25 M</span>
+                    <span class="bg-amber-50 text-amber-700 px-3 py-1.5 rounded-md border border-amber-200">Final: 70 M Total</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Sub-Bar -->
+        <nav class="bg-slate-50 border-t border-slate-200 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 py-1.5 text-xs font-medium text-slate-600 whitespace-nowrap">
+                <a href="#unit-2-1" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">2.1 Tangent Lines</a>
+                <a href="#unit-2-2" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">2.2 Implicit Differentiation</a>
+                <a href="#unit-2-3" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">2.3 Rates of Change</a>
+                <a href="#unit-2-4" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">2.4 Extrema & Optimization</a>
+                <a href="#unit-2-5" class="px-3 py-1 rounded-md hover:bg-slate-200 transition-colors">2.5 Reference Sheet</a>
+                <a href="#self-assessment" class="px-3 py-1 rounded-md bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition-colors font-bold">&Delta; Self-Assessment</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Learning Canvas -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 flex-grow">
+
+        <!-- INTRODUCTORY BANNER -->
+        <section class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-800 inline-block mb-3">Academic Rigor & Departmental Standards</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-3">Phase 2: Differentiation, Implicit Curves, & Optimization</h2>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Moving beyond the limits and continuity of Phase 1, Phase 2 delves into the heart of differential calculus. We will explore the geometry of tangent lines, the mechanics of implicit differentiation on complex curves like the Folium of Descartes, dynamic related rates problems, and the rigorous definitions of absolute and relative extrema required for ISRT examinations.
+                </p>
+            </div>
+        </section>
+
+        <!-- UNIT 2.1 -->
+        <section id="unit-2-1" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 01</span>
+                    <span>&bull;</span>
+                    <span>Geometry</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 2.1: Tangent Lines and Instantaneous Velocity</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Speedometers and Slopes</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    If you drive 120 miles in 2 hours, your <em>average</em> velocity is 60 mph. But what does your speedometer read at exactly 1 hour and 15 minutes? That is <em>instantaneous</em> velocity. In calculus, average velocity corresponds to the slope of a <strong>secant line</strong> connecting two points on a position-time graph. As those two points merge into one, the secant line becomes a <strong>tangent line</strong>, and its slope represents the exact instantaneous rate of change at that moment [cite: 3, 4].
+                </p>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine: Definitions</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Tangent Line Definition [cite: 3]</span>
+                        <p class="text-slate-600 leading-relaxed">The tangent line to the curve $y=f(x)$ at the point $P(a, f(a))$ is the line through $P$ with slope $m = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$, provided this limit exists.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Instantaneous Velocity</span>
+                        <p class="text-slate-600 leading-relaxed">If $s = f(t)$ is the position function of a particle, its instantaneous velocity at time $t$ is the derivative $v(t) = s'(t) = \frac{ds}{dt}$ [cite: 4].</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 2.1.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT 1st Year 2nd In-course Exam 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 1 & 2</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-2">
+                    <p class="font-bold">Question:</p>
+                    <p>1. Find an equation for the tangent line to the curve $y = 2/x$ at the point $(2,1)$ on this curve [cite: 4].</p>
+                    <p>2. Consider a particle whose position function is $s = f(t) = 1 + 5t - 2t^2$. The position of the particle at time $t = 2$ s is $s = 3$ m. Find the particle's instantaneous velocity at time $t = 2$ s [cite: 4].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+                    
+                    <div>
+                        <strong class="text-slate-900">Part 1: Tangent Line Equation</strong>
+                        <p class="mt-1 text-slate-700">Given $y = f(x) = \frac{2}{x} = 2x^{-1}$. We need the slope at $x = 2$.</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$f'(x) = -2x^{-2} = -\frac{2}{x^2}$$
+                        </div>
+                        <p class="text-slate-700">Evaluate the slope $m$ at $x=2$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$m = f'(2) = -\frac{2}{(2)^2} = -\frac{2}{4} = -\frac{1}{2}$$
+                        </div>
+                        <p class="text-slate-700">Using the point-slope form $y - y_1 = m(x - x_1)$ with point $(2, 1)$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$y - 1 = -\frac{1}{2}(x - 2)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$y = -\frac{1}{2}x + 1 + 1 \implies y = -\frac{1}{2}x + 2$$
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <strong class="text-slate-900">Part 2: Instantaneous Velocity</strong>
+                        <p class="mt-1 text-slate-700">The position function is $s(t) = 1 + 5t - 2t^2$.</p>
+                        <p class="text-slate-700">The velocity function $v(t)$ is the derivative of position with respect to time:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$v(t) = s'(t) = \frac{d}{dt}(1 + 5t - 2t^2) = 5 - 4t$$
+                        </div>
+                        <p class="text-slate-700">Evaluate the velocity at $t = 2$ s:</p>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$v(2) = 5 - 4(2) = 5 - 8 = -3 \text{ m/s}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 2.2 -->
+        <section id="unit-2-2" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 02</span>
+                    <span>&bull;</span>
+                    <span>Advanced Differentiation</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 2.2: Implicit Differentiation and the Folium of Descartes</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Curves that loop</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    Most functions we see are explicitly solved for $y$, like $y = x^2$. But many beautiful and important geometric curves, like circles ($x^2 + y^2 = r^2$) or the Folium of Descartes ($x^3 + y^3 = 3xy$), twist and cross themselves, failing the vertical line test [cite: 3, 4]. We cannot isolate $y$ easily. Implicit differentiation allows us to find the slope $\frac{dy}{dx}$ at any point on these complex curves by differentiating both sides with respect to $x$ and applying the chain rule whenever we differentiate a term containing $y$ [cite: 3, 4].
+                </p>
+            </div>
+
+            <!-- Examiner Traps -->
+            <div class="trap-callout p-5 rounded-xl space-y-2">
+                <h4 class="text-sm font-bold text-red-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block"></span>
+                    <span>Examiner Trap & Memory Trick: The Missing Chain Rule</span>
+                </h4>
+                <div class="text-xs sm:text-sm text-red-900 space-y-2">
+                    <p>
+                        When differentiating $y^3$ implicitly with respect to $x$, students often write $3y^2$ and stop. <strong>This is wrong!</strong> Because $y$ is a function of $x$, the chain rule requires multiplying by the inner derivative: $\frac{d}{dx}(y^3) = 3y^2 \cdot \frac{dy}{dx}$. Similarly, terms like $xy$ require the product rule: $\frac{d}{dx}(xy) = 1 \cdot y + x \cdot \frac{dy}{dx}$ [cite: 3, 4].
+                    </p>
+                </div>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 2.2.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT Final Examination 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 4</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>(a) Use implicit differentiation to find $\frac{dy}{dx}$ for the Folium of Descartes: $x^3 + y^3 = 3xy$ [cite: 3, 4].</p>
+                    <p>(b) Find an equation for the tangent line to the Folium of Descartes at the point $(\frac{3}{2}, \frac{3}{2})$ [cite: 3, 4].</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+
+                    <div>
+                        <strong class="text-slate-900">Part (a): Implicit Differentiation</strong>
+                        <p class="mt-1 text-slate-700">Given $x^3 + y^3 = 3xy$. Differentiate both sides with respect to $x$, using the chain rule on $y^3$ and the product rule on $3xy$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$\frac{d}{dx}(x^3) + \frac{d}{dx}(y^3) = \frac{d}{dx}(3xy)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$3x^2 + 3y^2 \frac{dy}{dx} = 3 \left( y + x\frac{dy}{dx} \right)$$
+                        </div>
+                        <p class="text-slate-700">Divide the entire equation by 3 to simplify:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$x^2 + y^2 \frac{dy}{dx} = y + x\frac{dy}{dx}$$
+                        </div>
+                        <p class="text-slate-700">Group all terms with $\frac{dy}{dx}$ on one side:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$y^2 \frac{dy}{dx} - x\frac{dy}{dx} = y - x^2$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$\frac{dy}{dx} (y^2 - x) = y - x^2$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$\frac{dy}{dx} = \frac{y - x^2}{y^2 - x}$$
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <strong class="text-slate-900">Part (b): Tangent Line Equation</strong>
+                        <p class="mt-1 text-slate-700">Evaluate the derivative at the point $(x, y) = (\frac{3}{2}, \frac{3}{2})$ to find the slope $m$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$m = \frac{\frac{3}{2} - (\frac{3}{2})^2}{(\frac{3}{2})^2 - \frac{3}{2}} = \frac{\frac{3}{2} - \frac{9}{4}}{\frac{9}{4} - \frac{3}{2}}$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$m = \frac{\frac{6}{4} - \frac{9}{4}}{\frac{9}{4} - \frac{6}{4}} = \frac{-\frac{3}{4}}{\frac{3}{4}} = -1$$
+                        </div>
+                        <p class="text-slate-700">Using the point-slope form $y - y_1 = m(x - x_1)$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$y - \frac{3}{2} = -1 \left(x - \frac{3}{2}\right)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$y = -x + \frac{3}{2} + \frac{3}{2} \implies y = -x + 3 \implies x + y = 3$$
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 2.3 -->
+        <section id="unit-2-3" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 03</span>
+                    <span>&bull;</span>
+                    <span>Dynamic Systems</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 2.3: Related Rates</h2>
+            </div>
+
+            <!-- Intuitive Real-Life Hook -->
+            <div class="real-life-callout p-5 rounded-xl space-y-2">
+                <h3 class="text-sm font-bold text-amber-950 flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+                    <span>The Intuitive Real-Life Hook: Connected Movements</span>
+                </h3>
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    When variables are tied together by geometry (like the sides of a right triangle via the Pythagorean theorem), their rates of change are also tied together [cite: 4]. If a baseball player runs from second to third base, his distance to third base is shrinking at a known rate. But how fast is his distance from home plate changing? Because the diamond is a square, these distances form a right triangle. By taking the derivative of the Pythagorean theorem with respect to time ($t$), we link the unknown rate to the known rates [cite: 4].
+                </p>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 2.3.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT 1st Year 2nd In-course Exam 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 8</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>A baseball diamond is a square whose sides are 90 ft long. Suppose that a player running from second base to third base has a speed of 30 ft/s at the instant when he is 20 ft from third base. At what rate is the player's distance from home plate changing at that instant? [cite: 4]</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+
+                    <p class="text-slate-700">Let the baseball diamond be oriented on a coordinate plane with home plate at the origin $(0,0)$. First base is at $(90, 0)$, second base is at $(90, 90)$, and third base is at $(0, 90)$.</p>
+                    <p class="text-slate-700">The player is running from second base $(90, 90)$ to third base $(0, 90)$. Therefore, the player's y-coordinate is constant at $y=90$, and their x-coordinate is decreasing.</p>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 1: Define Variables and Given Information</strong></p>
+                        <ul class="list-disc list-inside text-slate-700 pl-4">
+                            <li>Let $x$ be the player's distance from third base. Because the side length is 90 ft, the player's coordinate position is $(x, 90)$.</li>
+                            <li>Let $z$ be the player's direct distance from home plate $(0,0)$.</li>
+                            <li>We are given the rate of change of $x$: $\frac{dx}{dt} = -30 \text{ ft/s}$ (negative because the distance to third base is decreasing).</li>
+                            <li>We need to find $\frac{dz}{dt}$ at the instant when $x = 20 \text{ ft}$.</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 2: Establish the Geometric Relationship</strong></p>
+                        <p class="text-slate-700">Using the distance formula or Pythagorean theorem for the triangle formed by home plate, third base, and the player:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$z^2 = x^2 + 90^2$$
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 3: Differentiate with Respect to Time ($t$)</strong></p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$\frac{d}{dt}(z^2) = \frac{d}{dt}(x^2 + 8100)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$2z \frac{dz}{dt} = 2x \frac{dx}{dt} \implies z \frac{dz}{dt} = x \frac{dx}{dt}$$
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 4: Solve for Unknowns at the Given Instant</strong></p>
+                        <p class="text-slate-700">When $x = 20$, we must find the corresponding value of $z$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$z^2 = 20^2 + 90^2 = 400 + 8100 = 8500 \implies z = \sqrt{8500} = 10\sqrt{85}$$
+                        </div>
+                        <p class="text-slate-700">Substitute all known values into the differentiated equation:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$(10\sqrt{85}) \frac{dz}{dt} = (20)(-30)$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$(10\sqrt{85}) \frac{dz}{dt} = -600$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1 font-bold text-indigo-700">
+                            $$\frac{dz}{dt} = \frac{-600}{10\sqrt{85}} = -\frac{60}{\sqrt{85}} \approx -6.51 \text{ ft/s}$$
+                        </div>
+                        <p class="text-slate-700 mt-2">The player's distance from home plate is decreasing at a rate of $60/\sqrt{85}$ ft/s.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 2.4 -->
+        <section id="unit-2-4" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Module 04</span>
+                    <span>&bull;</span>
+                    <span>Optimization</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 2.4: Extrema and Optimization</h2>
+            </div>
+
+            <!-- The Mathematical Engine -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 border-l-4 border-slate-900 pl-3">The Mathematical Engine: Definitions</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Absolute Maxima [cite: 3]</span>
+                        <p class="text-slate-600 leading-relaxed">Let $f$ be a function defined on some interval $I$ containing $c$. Then $f(c)$ is the absolute maximum of $f$ on $I$ if $f(c) \ge f(x)$ for all $x$ in $I$ [cite: 3].</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1">Relative Extrema [cite: 3]</span>
+                        <p class="text-slate-600 leading-relaxed">A function $f$ has a relative maximum (or minimum) at $c$ if there exists an open interval $(a, b)$ containing $c$ such that $f(c) \ge f(x)$ (or $f(c) \le f(x)$) for all $x$ in $(a, b)$ [cite: 3].</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 md:col-span-2">
+                        <span class="font-bold text-slate-800 block mb-1">Extreme Value Theorem [cite: 3]</span>
+                        <p class="text-slate-600 leading-relaxed">If $f$ is continuous on a closed interval $[a, b]$, then $f$ attains both an absolute maximum value $f(c)$ and an absolute minimum value $f(d)$ at some numbers $c$ and $d$ in $[a, b]$ [cite: 3].</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past ISRT Solved Exam Question 2.4.1 -->
+            <div class="exam-callout p-6 rounded-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">ISRT 1st Year 2nd In-course Exam 2024</span>
+                    <span class="text-xs font-mono font-bold text-emerald-900 bg-emerald-200/60 px-2 py-0.5 rounded">Problem 9</span>
+                </div>
+                
+                <div class="text-xs sm:text-sm text-emerald-950 space-y-1">
+                    <p class="font-bold">Question:</p>
+                    <p>An open box is to be made from a 16-inch by 30-inch piece of cardboard by cutting out squares of equal size from the four corners and bending up the sides. What size should the squares be to obtain a box with the largest volume? [cite: 4]</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-emerald-300 space-y-4 text-xs sm:text-sm text-slate-800">
+                    <div class="font-bold text-emerald-900 border-b border-slate-100 pb-2">Model Exam Solution (Written for Full Marks):</div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 1: Define Variables and the Objective Function</strong></p>
+                        <p class="text-slate-700">Let $x$ be the side length of the square cut from each corner. This $x$ will become the height of the folded box.</p>
+                        <ul class="list-disc list-inside text-slate-700 pl-4">
+                            <li>Length of the box base: $L = 30 - 2x$</li>
+                            <li>Width of the box base: $W = 16 - 2x$</li>
+                            <li>Height of the box: $H = x$</li>
+                        </ul>
+                        <p class="text-slate-700">The volume of the box is $V(x) = L \cdot W \cdot H$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$V(x) = (30 - 2x)(16 - 2x)(x) = (480 - 60x - 32x + 4x^2)x$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$V(x) = 4x^3 - 92x^2 + 480x$$
+                        </div>
+                        <p class="text-slate-700">The domain for $x$ is constrained by the shorter side of the cardboard. We cannot cut out more than half of 16 inches, so $0 < x < 8$.</p>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 2: Find Critical Points</strong></p>
+                        <p class="text-slate-700">Differentiate $V(x)$ with respect to $x$ and set to zero:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$V'(x) = 12x^2 - 184x + 480 = 0$$
+                        </div>
+                        <p class="text-slate-700">Divide by 4 to simplify:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$3x^2 - 46x + 120 = 0$$
+                        </div>
+                        <p class="text-slate-700">Use the quadratic formula to solve for $x$:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$x = \frac{-(-46) \pm \sqrt{(-46)^2 - 4(3)(120)}}{2(3)} = \frac{46 \pm \sqrt{2116 - 1440}}{6}$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$x = \frac{46 \pm \sqrt{676}}{6} = \frac{46 \pm 26}{6}$$
+                        </div>
+                        <p class="text-slate-700">This gives two possible roots:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$x_1 = \frac{72}{6} = 12 \quad \text{and} \quad x_2 = \frac{20}{6} = \frac{10}{3} = 3\frac{1}{3}$$
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 mt-2">
+                        <p><strong>Step 3: Verification</strong></p>
+                        <p class="text-slate-700">The root $x = 12$ is outside our valid domain $(0, 8)$, as cutting a 12-inch square from a 16-inch side is impossible. Therefore, the only physically meaningful critical point is $x = 10/3$.</p>
+                        <p class="text-slate-700">To confirm it is a maximum, check the second derivative:</p>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$V''(x) = 24x - 184$$
+                        </div>
+                        <div class="text-center font-serif text-sm py-1">
+                            $$V''(10/3) = 24(10/3) - 184 = 80 - 184 = -104$$
+                        </div>
+                        <p class="text-slate-700">Since $V''(10/3) < 0$, the function is concave down, confirming a local maximum.</p>
+                        
+                        <div class="text-center font-serif text-sm py-2 font-bold text-indigo-700 border-t border-slate-100 mt-2">
+                            $$\text{The squares should be } \frac{10}{3} \text{ inches by } \frac{10}{3} \text{ inches.}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIT 2.5: SUMMARY REFERENCE SHEET -->
+        <section id="unit-2-5" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Quick Review</span>
+                    <span>&bull;</span>
+                    <span>Exam Reference</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">Unit 2.5: Phase 2 Summary Reference Sheet</h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+                            <th class="p-3 w-1/4">Concept</th>
+                            <th class="p-3 w-1/2">Definition / Core Technique</th>
+                            <th class="p-3 w-1/4">Citation Note</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Tangent Line</td>
+                            <td class="p-3 font-serif">Line through $(a, f(a))$ with slope $m = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$</td>
+                            <td class="p-3 text-slate-500">[cite: 3]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Instantaneous Velocity</td>
+                            <td class="p-3 font-serif">$v(t) = s'(t) = \frac{ds}{dt}$</td>
+                            <td class="p-3 text-slate-500">[cite: 4]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Implicit Differentiation</td>
+                            <td class="p-3">Differentiate $f(x, y) = c$ wrt $x$, use chain rule on $y$, solve for $dy/dx$</td>
+                            <td class="p-3 text-slate-500">[cite: 3, 4]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Absolute Maxima</td>
+                            <td class="p-3 font-serif">$f(c) \ge f(x)$ for all $x \in I$</td>
+                            <td class="p-3 text-slate-500">[cite: 3]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Relative Extrema</td>
+                            <td class="p-3 font-serif">$f(c) \ge (\text{or } \le) f(x)$ for all $x$ in an open interval $(a, b)$</td>
+                            <td class="p-3 text-slate-500">[cite: 3]</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold text-slate-900">Extreme Value Theorem</td>
+                            <td class="p-3 font-serif">If $f$ continuous on $[a, b]$, $f$ attains absolute max/min on $[a, b]$</td>
+                            <td class="p-3 text-slate-500">[cite: 3]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SELF-ASSESSMENT PROBLEM SET -->
+        <section id="self-assessment" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <div class="flex items-center space-x-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
+                    <span>Active Recall</span>
+                    <span>&bull;</span>
+                    <span>Practice Problems</span>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900">&Delta; Phase 2 Self-Assessment Problem Set</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Test your preparation with problems modeled on past ISRT examination questions.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Practice Q1 -->
+                <div class="border border-slate-200 rounded-xl p-5 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">Practice Problem 1</span>
+                        <span class="text-xs text-slate-500">Implicit Differentiation [cite: 3, 4, 8]</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-800">
+                        Show that $x^3 + 3xy^2 = 1$ is an implicit solution to the differential equation $2xy \frac{dy}{dx} + x^2 + y^2 = 0$ on the interval $0 < x < 1$ [cite: 8].
+                    </p>
+                    <button onclick="toggleElement('sol-q1')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">+ Reveal Step-by-Step Solution</button>
+                    <div id="sol-q1" class="hidden p-4 bg-slate-50 rounded-lg text-xs sm:text-sm text-slate-700 space-y-2 border border-slate-200">
+                        <p><strong>Solution:</strong></p>
+                        <p>Differentiate $x^3 + 3xy^2 = 1$ implicitly with respect to $x$:</p>
+                        <div class="text-center font-serif">$$\frac{d}{dx}(x^3) + \frac{d}{dx}(3xy^2) = \frac{d}{dx}(1)$$</div>
+                        <p>Apply the power rule and product rule:</p>
+                        <div class="text-center font-serif">$$3x^2 + \left[ 3 \cdot y^2 + 3x \cdot 2y \frac{dy}{dx} \right] = 0$$</div>
+                        <div class="text-center font-serif">$$3x^2 + 3y^2 + 6xy \frac{dy}{dx} = 0$$</div>
+                        <p>Divide the entire equation by 3:</p>
+                        <div class="text-center font-serif">$$x^2 + y^2 + 2xy \frac{dy}{dx} = 0$$</div>
+                        <p>Rearranging the terms yields the exact differential equation given [cite: 8]:</p>
+                        <div class="text-center font-serif font-bold text-indigo-700">$$2xy \frac{dy}{dx} + x^2 + y^2 = 0 \quad \blacksquare$$</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-bold text-slate-700">Institute of Statistical Research and Training (ISRT) &bull; University of Dhaka</p>
+            <p class="mt-1">MATH 104 Differential Calculus &bull; First-Year B.S. Honours &bull; Interactive Academic Masterclass</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+        // Collapsible element helper
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([el]);
+                }
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
