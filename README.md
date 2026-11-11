@@ -2,6 +2,9 @@
 
 A production-quality, zero-error interactive learning website for **MATH 104: Differential Calculus** (University of Dhaka CSE Blueprint & 4-Phase Mastery Curriculum). Built with React 18, TypeScript (strict mode), Tailwind CSS, KaTeX, SVG Asymptote-Safe Function Plotter, and a deterministic mathematical engine with automated finite-difference verification.
 
+- **Live GitHub Pages URL**: [https://sashuvo379-design.github.io/math104-differential-calculus/](https://sashuvo379-design.github.io/math104-differential-calculus/)
+- **GitHub Repository**: [https://github.com/sashuvo379-design/math104-differential-calculus](https://github.com/sashuvo379-design/math104-differential-calculus)
+
 ---
 
 ## Features & Curriculum Coverage
