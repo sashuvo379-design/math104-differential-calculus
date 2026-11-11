@@ -4,6 +4,7 @@ A production-quality, zero-error interactive learning website for **MATH 104: Di
 
 - **Live GitHub Pages URL**: [https://sashuvo379-design.github.io/math104-differential-calculus/](https://sashuvo379-design.github.io/math104-differential-calculus/)
 - **GitHub Repository**: [https://github.com/sashuvo379-design/math104-differential-calculus](https://github.com/sashuvo379-design/math104-differential-calculus)
+- **Author & Developer**: **Saad, IASDS-32** (Institute of Statistical Research and Training — ISRT, University of Dhaka)
 
 ---
 

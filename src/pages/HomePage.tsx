@@ -30,6 +30,9 @@ export const HomePage: React.FC = () => {
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
               First-Year B.S. Honours
             </span>
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-200 border border-amber-400/40 flex items-center gap-1.5 shadow-2xs">
+              <span>🎓</span> Made and developed by Saad, IASDS-32
+            </span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
             MATH 104: Differential Calculus — Interactive Masterclass &amp; Exam Hub

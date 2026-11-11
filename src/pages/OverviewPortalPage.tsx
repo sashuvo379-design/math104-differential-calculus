@@ -52,12 +52,15 @@ export const OverviewPortalPage: React.FC = () => {
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="px-2.5 py-0.5 bg-rose-600 text-white text-xs font-extrabold rounded uppercase tracking-wider">
                 DU Master Portal
               </span>
               <span className="text-xs font-semibold text-slate-500">
                 Department of Mathematics • University of Dhaka
+              </span>
+              <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-xs font-bold rounded">
+                Made and developed by Saad, IASDS-32
               </span>
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">

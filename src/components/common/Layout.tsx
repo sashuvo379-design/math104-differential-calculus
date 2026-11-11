@@ -91,7 +91,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                  University of Dhaka • Interactive Learning &amp; Exam Hub
+                  University of Dhaka • Made &amp; Developed by Saad, IASDS-32
                 </p>
               </div>
             </Link>
@@ -242,6 +242,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 ISRT &amp; DU MATH 104 Syllabus: Incourse (~25M) + Final Exam (70M). All original
                 lessons &amp; Dr. Md. Rakib Hossain lecture problems preserved.
               </p>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700/60 flex items-center gap-1.5 text-[11px] font-semibold text-blue-600 dark:text-blue-400">
+                <GraduationCap className="w-3.5 h-3.5 shrink-0" />
+                <span>Made &amp; Developed by Saad, IASDS-32</span>
+              </div>
             </div>
           </div>
         </aside>
@@ -252,14 +256,18 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       {/* Footer */}
       <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-5 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
           <div>
             <strong className="text-slate-700 dark:text-slate-300">
               MATH 104 Differential Calculus
             </strong>{' '}
             • Department of Mathematics &amp; ISRT, University of Dhaka
           </div>
-          <div>First-Year B.S. Honours • Interactive Academic Masterclass &amp; Exam Hub</div>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 font-bold shadow-2xs">
+              Made and developed by Saad, IASDS-32
+            </span>
+          </div>
         </div>
       </footer>
 
