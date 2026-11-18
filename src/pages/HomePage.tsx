@@ -36,7 +36,7 @@ export const HomePage: React.FC = () => {
               First-Year B.S. Honours
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-black bg-amber-400/20 text-amber-200 border border-amber-400/50 flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
-              <span>🎓</span> Made and developed by Saad, IASDS-32
+              <span>🎓</span> Developed by Saad • All rights reserved
             </span>
           </div>
 

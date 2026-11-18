@@ -125,8 +125,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                  University of Dhaka • Made &amp; Developed by{' '}
-                  <span className="font-bold text-cyan-600 dark:text-cyan-400">Saad, IASDS-32</span>
+                  University of Dhaka •{' '}
+                  <span className="font-bold text-cyan-600 dark:text-cyan-400">
+                    Developed by Saad • All rights reserved
+                  </span>
                 </p>
               </div>
             </Link>
@@ -314,7 +316,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </p>
                 <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center gap-1.5 text-[11px] font-semibold text-cyan-600 dark:text-cyan-400">
                   <GraduationCap className="w-3.5 h-3.5 shrink-0" />
-                  <span>Made &amp; Developed by Saad, IASDS-32</span>
+                  <span>Developed by Saad • All rights reserved</span>
                 </div>
               </div>
             ) : (
@@ -343,7 +345,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           </div>
           <div className="flex items-center gap-2">
             <span className="px-3.5 py-1 rounded-full bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200 dark:border-cyan-500/40 text-cyan-700 dark:text-cyan-300 font-extrabold shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-              Made and developed by Saad, IASDS-32
+              Developed by Saad • All rights reserved
             </span>
           </div>
         </div>

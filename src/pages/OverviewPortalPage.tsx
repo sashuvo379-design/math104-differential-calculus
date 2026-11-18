@@ -61,7 +61,7 @@ export const OverviewPortalPage: React.FC = () => {
                 Department of Mathematics • University of Dhaka
               </span>
               <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-xs font-bold rounded">
-                Made and developed by Saad, IASDS-32
+                Developed by Saad • All rights reserved
               </span>
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
