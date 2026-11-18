@@ -54,36 +54,38 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
 
   const borderStyle =
     variant === 'lecture'
-      ? 'border-l-4 border-l-blue-600 bg-blue-50/70 dark:bg-blue-950/25 border-blue-200 dark:border-blue-900'
+      ? 'border-l-2 border-l-[#0F3D6E] dark:border-l-sky-400'
       : variant === 'practice'
-        ? 'border-l-4 border-l-indigo-600 bg-slate-50/80 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800'
-        : 'border-l-4 border-l-emerald-600 bg-emerald-50/70 dark:bg-emerald-950/25 border-emerald-200 dark:border-emerald-900';
+        ? 'border-l-2 border-l-zinc-500 dark:border-l-zinc-400'
+        : 'border-l-2 border-l-emerald-700 dark:border-l-emerald-400';
 
   return (
-    <div className={`p-5 sm:p-6 rounded-xl border ${borderStyle} space-y-4 transition-colors`}>
+    <div
+      className={`p-5 sm:p-6 rounded-md bg-white dark:bg-[#111622] border border-zinc-200 dark:border-[#242B3D] ${borderStyle} space-y-4`}
+    >
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-200/70 dark:border-slate-700 pb-2.5">
-        <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 dark:border-[#242B3D] pb-3">
+        <span className="text-[11px] font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400">
           {examSource}
         </span>
         <div className="flex items-center gap-2">
           {isMastered && (
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 className="w-3.5 h-3.5" />
               Reviewed
             </span>
           )}
-          <span className="text-xs font-mono font-bold text-emerald-950 dark:text-emerald-200 bg-emerald-200/70 dark:bg-emerald-900/60 px-2.5 py-0.5 rounded">
+          <span className="text-[11px] font-mono font-semibold text-[#0F3D6E] dark:text-sky-300 bg-[#F0F4F8] dark:bg-[#161F30] px-2.5 py-0.5 rounded-sm border border-zinc-200 dark:border-zinc-700">
             {problemBadge}
           </span>
         </div>
       </div>
 
       {/* Question Prompt */}
-      <div className="text-xs sm:text-sm text-slate-900 dark:text-slate-100 space-y-1.5">
-        <p className="font-bold">Question:</p>
+      <div className="text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 space-y-1.5">
+        <p className="font-bold text-zinc-900 dark:text-zinc-50">Problem Statement</p>
         {questionLines.map((line, idx) => (
-          <p key={idx} className="leading-relaxed">
+          <p key={idx} className="leading-relaxed text-zinc-700 dark:text-zinc-300">
             <RichMathText text={line} />
           </p>
         ))}
@@ -99,7 +101,7 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
         <button
           type="button"
           onClick={() => setShowHint((prev) => !prev)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-100 hover:bg-amber-200 text-amber-900 dark:bg-amber-900/50 dark:hover:bg-amber-900/80 dark:text-amber-200 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#FAF9F6] dark:bg-[#0B0E14] text-amber-800 dark:text-amber-300 border border-zinc-300 dark:border-zinc-700 hover:border-amber-500 transition-colors"
         >
           <Lightbulb className="w-3.5 h-3.5" />
           {showHint ? 'Hide Hint' : 'Show Hint'}
@@ -114,9 +116,9 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
               handleShowNextStep();
             }
           }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-100 hover:bg-blue-200 text-blue-900 dark:bg-blue-900/50 dark:hover:bg-blue-900/80 dark:text-blue-200 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#FAF9F6] dark:bg-[#0B0E14] text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 transition-colors"
         >
-          <ChevronRight className="w-3.5 h-3.5" />
+          <ChevronRight className="w-3.5 h-3.5 text-[#0F3D6E] dark:text-sky-400" />
           {visibleStepsCount === steps.length
             ? 'Step-by-Step Practice Mode (Step 1)'
             : `Show Next Step (${visibleStepsCount}/${steps.length})`}
@@ -125,12 +127,12 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
         <button
           type="button"
           onClick={handleShowFullSolution}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#0F3D6E] dark:bg-sky-600 hover:opacity-90 text-white transition-opacity"
         >
           {visibleStepsCount === steps.length ? (
             <>
               <EyeOff className="w-3.5 h-3.5" />
-              Hide Full Solution
+              Hide Solution
             </>
           ) : (
             <>
@@ -143,32 +145,31 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
 
       {/* Hint Drawer */}
       {showHint && (
-        <div className="p-3.5 rounded-lg bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-xs text-amber-950 dark:text-amber-200">
-          <strong className="font-bold block mb-0.5">Strategy Hint:</strong>
+        <div className="p-3.5 rounded-md bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50 text-xs text-zinc-800 dark:text-zinc-200">
+          <strong className="font-bold text-amber-900 dark:text-amber-300 block mb-0.5">
+            Strategy Hint:
+          </strong>
           <RichMathText text={hint} />
         </div>
       )}
 
       {/* Solution Steps */}
       {visibleStepsCount > 0 && (
-        <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-xl border border-emerald-300 dark:border-slate-700 space-y-4 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-          <div className="font-bold text-emerald-900 dark:text-emerald-300 border-b border-slate-100 dark:border-slate-800 pb-2 flex justify-between items-center">
-            <span>Model Exam Solution (Written for Full Marks):</span>
-            <span className="text-[11px] font-mono text-slate-500">
-              Showing {visibleStepsCount} of {steps.length} steps
+        <div className="bg-[#FAF9F6] dark:bg-[#0B0E14] p-4 sm:p-5 rounded-md border border-zinc-200 dark:border-[#242B3D] space-y-4 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200">
+          <div className="font-semibold text-zinc-900 dark:text-zinc-100 border-b border-zinc-200 dark:border-[#242B3D] pb-2 flex justify-between items-center">
+            <span>Model Exam Solution</span>
+            <span className="text-[11px] font-mono text-zinc-500">
+              {visibleStepsCount} / {steps.length} steps
             </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 divide-y divide-zinc-200 dark:divide-[#242B3D]">
             {steps.slice(0, visibleStepsCount).map((step, sIdx) => (
-              <div
-                key={sIdx}
-                className="bg-slate-50 dark:bg-slate-800/70 p-3.5 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1.5"
-              >
-                <div className="font-bold text-slate-900 dark:text-white">
+              <div key={sIdx} className={`${sIdx > 0 ? 'pt-3' : ''} space-y-1.5`}>
+                <div className="font-bold text-zinc-900 dark:text-zinc-100">
                   <RichMathText text={step.title} />
                 </div>
-                <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
                   <RichMathText text={step.explanation} />
                 </p>
                 {step.mathLatex && (
@@ -177,7 +178,7 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
                   </div>
                 )}
                 {step.highlightMathLatex && (
-                  <div className="py-1 font-bold text-indigo-700 dark:text-indigo-300 overflow-x-auto">
+                  <div className="py-1.5 px-3 bg-[#F0F4F8] dark:bg-[#131C2E] border-l-2 border-[#0F3D6E] dark:border-sky-400 font-bold text-[#0F3D6E] dark:text-sky-300 overflow-x-auto rounded-r-sm">
                     <KaTeXMath math={step.highlightMathLatex} display />
                   </div>
                 )}
@@ -186,8 +187,8 @@ export const WorkedExampleCard: React.FC<WorkedExampleCardProps> = ({
           </div>
 
           {reviewNote && visibleStepsCount === steps.length && (
-            <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200 flex items-start gap-2">
-              <Info className="w-4 h-4 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
+            <div className="p-3 rounded-md bg-white dark:bg-[#111622] border border-zinc-200 dark:border-[#242B3D] text-xs text-zinc-700 dark:text-zinc-300 flex items-start gap-2">
+              <Info className="w-4 h-4 shrink-0 mt-0.5 text-[#0F3D6E] dark:text-sky-400" />
               <div>
                 <RichMathText text={reviewNote} />
               </div>

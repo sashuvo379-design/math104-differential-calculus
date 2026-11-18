@@ -5,6 +5,23 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Subtle, refined scrollbars instead of clunky OS default bars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(113, 113, 122, 0.25);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(113, 113, 122, 0.45);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -21,95 +38,66 @@
   }
 }
 
-/* Custom Math & Academic Callout Styles Preserving Original Lesson Aesthetics */
+/* Mathematical Display Container — Editorial Textbook Style */
 .math-display-box {
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-  border-left: 4px solid #06b6d4;
-  border-right: 1px solid rgba(226, 232, 240, 0.8);
-  border-top: 1px solid rgba(226, 232, 240, 0.8);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  background-color: #f4f4f1;
+  border-left: 3px solid #0f3d6e;
+  border-top: 1px solid #e4e4e7;
+  border-right: 1px solid #e4e4e7;
+  border-bottom: 1px solid #e4e4e7;
   padding: 0.875rem 1.25rem;
-  border-radius: 0.625rem;
+  border-radius: 0.375rem;
   margin: 0.75rem 0;
-  color: #0f172a;
+  color: #18181b;
   overflow-x: auto;
-  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
 }
 
 .dark .math-display-box {
-  background: linear-gradient(135deg, #0f172a, #0b0f19);
-  border-left-color: #06b6d4;
-  border-right: 1px solid rgba(30, 41, 59, 0.8);
-  border-top: 1px solid rgba(30, 41, 59, 0.8);
-  border-bottom: 1px solid rgba(30, 41, 59, 0.8);
-  color: #f1f5f9;
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.3);
+  background-color: #111622;
+  border-left-color: #60a5fa;
+  border-top: 1px solid #242b3d;
+  border-right: 1px solid #242b3d;
+  border-bottom: 1px solid #242b3d;
+  color: #f4f4f5;
 }
 
 .katex-display {
-  margin: 0.5em 0 !important;
+  margin: 0.45em 0 !important;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.25rem 0;
 }
 
-/* Unique Lucrative Outlines & Radiant Theme Accents */
-.lucrative-border {
-  border: 1px solid rgba(6, 182, 212, 0.25);
-  box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.12);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Subtle Architectural Graph-Paper Dot Grid */
+.editorial-dot-grid {
+  background-image: radial-gradient(rgba(15, 61, 110, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.lucrative-border:hover {
-  border-color: rgba(6, 182, 212, 0.45);
-  box-shadow: 0 0 30px -4px rgba(6, 182, 212, 0.22);
+.dark .editorial-dot-grid {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.dark .lucrative-border {
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.15);
+/* Precision Panel Surface (clean hairline border, zero neon glow) */
+.academic-panel {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.dark .lucrative-border:hover {
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 0 35px -2px rgba(6, 182, 212, 0.3);
+.academic-panel:hover {
+  border-color: #cbd5e1;
 }
 
-/* Lucrative Card Container with Gradient Crown */
-.lucrative-card {
-  position: relative;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 1rem;
-  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+.dark .academic-panel {
+  background-color: #111622;
+  border: 1px solid #242b3d;
 }
 
-.dark .lucrative-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(11, 15, 25, 0.9));
-  border: 1px solid rgba(51, 65, 85, 0.6);
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
-}
-
-.lucrative-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b);
-  opacity: 0.85;
-}
-
-.lucrative-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 12px 30px -8px rgba(6, 182, 212, 0.18);
-}
-
-.dark .lucrative-card:hover {
-  border-color: rgba(6, 182, 212, 0.45);
-  box-shadow: 0 12px 36px -8px rgba(6, 182, 212, 0.22);
+.dark .academic-panel:hover {
+  border-color: #36415c;
 }

@@ -33,7 +33,8 @@ const PRESETS_3D: Preset3D[] = [
     expr: 'x^2 - y^2',
     domain: [-2.5, 2.5],
     defaultPoint: [0, 0],
-    description: 'Opposite curvatures along x and y axes create a saddle point with horizontal tangent plane at (0, 0).',
+    description:
+      'Opposite curvatures along x and y axes create a saddle point with horizontal tangent plane at (0, 0).',
   },
   {
     id: 'paraboloid',
@@ -42,7 +43,8 @@ const PRESETS_3D: Preset3D[] = [
     expr: 'x^2 + y^2',
     domain: [-2.5, 2.5],
     defaultPoint: [0, 0],
-    description: 'Bowl surface curving upward in all directions with a global minimum at the origin.',
+    description:
+      'Bowl surface curving upward in all directions with a global minimum at the origin.',
   },
   {
     id: 'slide-ex5',
@@ -51,7 +53,8 @@ const PRESETS_3D: Preset3D[] = [
     expr: 'x^3 + y^3 - 3*x*y',
     domain: [-2, 2.2],
     defaultPoint: [1, 1],
-    description: 'Dr. Md. Rakib Hossain Slide Example 5: possesses a saddle point at (0,0) and a local minimum at (1,1).',
+    description:
+      'Dr. Md. Rakib Hossain Slide Example 5: possesses a saddle point at (0,0) and a local minimum at (1,1).',
   },
   {
     id: 'slide-ex7',
@@ -60,7 +63,8 @@ const PRESETS_3D: Preset3D[] = [
     expr: 'x*y*(1 - x - y)',
     domain: [-0.5, 1.2],
     defaultPoint: [0.33, 0.33],
-    description: 'Dr. Md. Rakib Hossain Slide Example 7: triangular boundary with unique interior maximum at (1/3, 1/3).',
+    description:
+      'Dr. Md. Rakib Hossain Slide Example 7: triangular boundary with unique interior maximum at (1/3, 1/3).',
   },
   {
     id: 'monkey-saddle',
@@ -78,7 +82,8 @@ const PRESETS_3D: Preset3D[] = [
     expr: 'sin(sqrt(x^2 + y^2) * 2.5)',
     domain: [-3, 3],
     defaultPoint: [0, 0],
-    description: 'Circular ripples demonstrating multivariable chain rule along radial polar paths.',
+    description:
+      'Circular ripples demonstrating multivariable chain rule along radial polar paths.',
   },
 ];
 
@@ -510,25 +515,22 @@ export const SurfaceGrapher3D: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-cyan-500/20 bg-slate-900/90 text-slate-100 shadow-[0_0_35px_-5px_rgba(6,182,212,0.15)] overflow-hidden space-y-4">
+    <div className="rounded-lg border border-zinc-200 dark:border-[#242B3D] bg-[#0B0E14] text-zinc-100 overflow-hidden space-y-4">
       {/* Header Bar */}
-      <div className="p-4 sm:p-5 border-b border-cyan-500/20 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-4 sm:p-5 border-b border-[#242B3D] bg-[#111622] flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wider uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
-              Interactive 3D Multivariable Engine
-            </span>
-            <span className="hidden sm:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
-              Three.js WebGL
-            </span>
+          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+            <span className="text-sky-400">Multivariable 3D WebGL Engine</span>
+            <span>•</span>
+            <span>Three.js</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-1 flex items-center gap-2">
-            <Box className="w-5 h-5 text-cyan-400" />
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight mt-0.5 flex items-center gap-2">
+            <Box className="w-5 h-5 text-sky-400" />
             3D Surface Grapher &amp; Tangent Plane Explorer
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Rotate (Left Drag), Pan (Right Drag), Zoom (Scroll). Inspect critical points, Hessian
-            curvature, and tangent planes in live 3D space.
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Drag to orbit, right-drag to pan, scroll to zoom. Evaluate critical points, Hessian
+            discriminants, and tangent planes in 3D space.
           </p>
         </div>
 
@@ -538,17 +540,21 @@ export const SurfaceGrapher3D: React.FC = () => {
             type="button"
             onClick={() => setIsRotating((v) => !v)}
             aria-label={isRotating ? 'Pause auto-rotation' : 'Play auto-rotation'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#182032] hover:bg-[#1E2940] text-zinc-200 border border-[#2D384F] transition-colors"
           >
-            {isRotating ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emerald-400" />}
-            <span>{isRotating ? 'Spinning' : 'Paused'}</span>
+            {isRotating ? (
+              <Pause className="w-3.5 h-3.5 text-amber-400" />
+            ) : (
+              <Play className="w-3.5 h-3.5 text-emerald-400" />
+            )}
+            <span>{isRotating ? 'Auto-Orbit' : 'Paused'}</span>
           </button>
 
           <button
             type="button"
             onClick={handleResetCamera}
             aria-label="Reset 3D camera angle"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors"
+            className="p-1.5 rounded-md text-zinc-400 hover:text-white bg-[#182032] hover:bg-[#1E2940] border border-[#2D384F] transition-colors"
             title="Reset Camera View"
           >
             <RotateCcw className="w-4 h-4" />
@@ -559,10 +565,14 @@ export const SurfaceGrapher3D: React.FC = () => {
             type="button"
             onClick={() => setControlsCollapsed((v) => !v)}
             aria-label={controlsCollapsed ? 'Expand control palette' : 'Collapse control palette'}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white shadow-sm transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#0F3D6E] hover:bg-sky-700 text-white transition-colors"
           >
-            {controlsCollapsed ? <Maximize2 className="w-3.5 h-3.5" /> : <Minimize2 className="w-3.5 h-3.5" />}
-            <span>{controlsCollapsed ? 'Show Controls' : 'Full Canvas'}</span>
+            {controlsCollapsed ? (
+              <Maximize2 className="w-3.5 h-3.5" />
+            ) : (
+              <Minimize2 className="w-3.5 h-3.5" />
+            )}
+            <span>{controlsCollapsed ? 'Show Controls' : 'Collapse Controls'}</span>
           </button>
         </div>
       </div>
@@ -571,14 +581,14 @@ export const SurfaceGrapher3D: React.FC = () => {
       {!controlsCollapsed && (
         <div className="px-4 sm:px-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              Syllabus Presets &amp; Exam Slide Surfaces
+              Syllabus &amp; Exam Slide Surfaces
             </span>
             <button
               type="button"
               onClick={() => setPresetsCollapsed((v) => !v)}
-              className="text-xs text-cyan-400 hover:underline flex items-center gap-1"
+              className="text-xs text-sky-400 hover:underline flex items-center gap-1"
             >
               {presetsCollapsed ? (
                 <>
@@ -603,14 +613,14 @@ export const SurfaceGrapher3D: React.FC = () => {
                     key={p.id}
                     type="button"
                     onClick={() => handleSelectPreset(p)}
-                    className={`p-2.5 rounded-xl border text-left transition-all text-xs flex flex-col justify-between gap-1.5 ${
+                    className={`p-2.5 rounded-md border text-left transition-colors text-xs flex flex-col justify-between gap-1.5 ${
                       active
-                        ? 'border-cyan-400 bg-cyan-950/40 text-white shadow-[0_0_15px_rgba(6,182,212,0.3)] ring-1 ring-cyan-400'
-                        : 'border-slate-800 bg-slate-950/60 text-slate-300 hover:border-slate-700 hover:bg-slate-800/50'
+                        ? 'border-sky-400 bg-[#152238] text-white'
+                        : 'border-[#242B3D] bg-[#111622] text-zinc-300 hover:border-zinc-600'
                     }`}
                   >
-                    <div className="font-bold text-[11px] truncate">{p.name}</div>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/80 text-cyan-300 font-mono truncate">
+                    <div className="font-semibold text-[11px] truncate">{p.name}</div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-sm bg-[#0B0E14] text-sky-300 font-mono truncate border border-[#242B3D]">
                       {p.expr}
                     </span>
                   </button>
@@ -622,42 +632,46 @@ export const SurfaceGrapher3D: React.FC = () => {
       )}
 
       {/* Main 3D Canvas Viewport */}
-      <div className="relative mx-4 sm:mx-5 rounded-xl overflow-hidden border border-cyan-500/30 bg-slate-950 shadow-inner">
-        <div ref={mountRef} className="w-full h-[480px] cursor-grab active:cursor-grabbing" />
+      <div className="relative mx-4 sm:mx-5 rounded-md overflow-hidden border border-[#242B3D] bg-[#080B10]">
+        <div ref={mountRef} className="w-full h-[460px] cursor-grab active:cursor-grabbing" />
 
-        {/* 3D HUD Overlay: Current Classification & Coordinates */}
+        {/* 3D HUD Overlay */}
         <div className="absolute top-3 left-3 pointer-events-none space-y-1.5">
-          <div className="px-3 py-1.5 rounded-lg bg-slate-900/85 backdrop-blur-md border border-cyan-500/30 text-xs shadow-lg flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono text-cyan-300 font-bold">z = {expression}</span>
+          <div className="px-3 py-1.5 rounded-md bg-[#0B0E14]/90 backdrop-blur-sm border border-[#242B3D] text-xs flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="font-mono text-sky-300 font-semibold">z = {expression}</span>
           </div>
 
-          <div className="px-3 py-1.5 rounded-lg bg-slate-900/85 backdrop-blur-md border border-slate-700 text-[11px] text-slate-300 shadow-md">
+          <div className="px-3 py-1.5 rounded-md bg-[#0B0E14]/90 backdrop-blur-sm border border-[#242B3D] text-[11px] text-zinc-300">
             <div>
-              Tangent Point: <span className="font-mono text-amber-300 font-bold">({x0.toFixed(2)}, {y0.toFixed(2)})</span>
+              Point:{' '}
+              <span className="font-mono text-amber-300 font-semibold">
+                ({x0.toFixed(2)}, {y0.toFixed(2)})
+              </span>
             </div>
             <div>
-              Elevation: <span className="font-mono text-emerald-300 font-bold">z₀ = {evalResult.z0}</span>
+              Elevation:{' '}
+              <span className="font-mono text-emerald-300 font-semibold">z₀ = {evalResult.z0}</span>
             </div>
           </div>
         </div>
 
-        {/* 3D Legend & Colormap Indicator */}
-        <div className="absolute bottom-3 left-3 pointer-events-none hidden sm:flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900/80 backdrop-blur-md border border-slate-800 text-[10px] text-slate-400">
-          <span>Min (Indigo)</span>
-          <div className="w-20 h-2 rounded bg-gradient-to-r from-blue-700 via-cyan-400 via-emerald-400 via-amber-400 to-rose-500" />
-          <span>Max (Rose)</span>
+        {/* Colormap Indicator */}
+        <div className="absolute bottom-3 left-3 pointer-events-none hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-sm bg-[#0B0E14]/85 border border-[#242B3D] text-[10px] text-zinc-400">
+          <span>Min</span>
+          <div className="w-20 h-1.5 rounded-sm bg-gradient-to-r from-blue-700 via-cyan-400 via-emerald-400 via-amber-400 to-rose-500" />
+          <span>Max</span>
         </div>
 
-        {/* Floating Quick Toggles */}
+        {/* Viewport Layer Toggles */}
         <div className="absolute bottom-3 right-3 flex items-center gap-2">
           <button
             type="button"
             onClick={() => setShowWireframe((v) => !v)}
-            className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors flex items-center gap-1 backdrop-blur-md ${
+            className={`px-2.5 py-1 rounded-sm text-xs font-semibold border transition-colors flex items-center gap-1 ${
               showWireframe
-                ? 'bg-cyan-950/80 border-cyan-500/60 text-cyan-300'
-                : 'bg-slate-900/80 border-slate-700 text-slate-400'
+                ? 'bg-[#152238] border-sky-500/60 text-sky-300'
+                : 'bg-[#0B0E14]/90 border-[#242B3D] text-zinc-400'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -667,10 +681,10 @@ export const SurfaceGrapher3D: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowTangentPlane((v) => !v)}
-            className={`px-2.5 py-1 rounded text-xs font-bold border transition-colors flex items-center gap-1 backdrop-blur-md ${
+            className={`px-2.5 py-1 rounded-sm text-xs font-semibold border transition-colors flex items-center gap-1 ${
               showTangentPlane
                 ? 'bg-amber-950/80 border-amber-500/60 text-amber-300'
-                : 'bg-slate-900/80 border-slate-700 text-slate-400'
+                : 'bg-[#0B0E14]/90 border-[#242B3D] text-zinc-400'
             }`}
           >
             <span>Tangent Plane</span>
@@ -684,7 +698,7 @@ export const SurfaceGrapher3D: React.FC = () => {
           {/* Custom Equation Bar */}
           <form onSubmit={handleCustomSubmit} className="flex flex-wrap items-center gap-2">
             <div className="flex-1 min-w-[240px] relative">
-              <span className="absolute left-3 top-2.5 text-xs font-mono font-bold text-cyan-400">
+              <span className="absolute left-3 top-2 text-xs font-mono font-semibold text-sky-400">
                 f(x, y) =
               </span>
               <input
@@ -692,29 +706,29 @@ export const SurfaceGrapher3D: React.FC = () => {
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value)}
                 placeholder="e.g. x^2 - y^2 or x*y*(1 - x - y)"
-                className="w-full pl-20 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-xs font-mono text-white placeholder-slate-500 transition-colors"
+                className="w-full pl-20 pr-4 py-2 rounded-md bg-[#111622] border border-[#242B3D] focus:border-sky-400 text-xs font-mono text-white placeholder-zinc-500 transition-colors outline-none"
               />
             </div>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-600 hover:bg-cyan-500 text-white shadow-sm transition-colors"
+              className="px-4 py-2 rounded-md text-xs font-semibold bg-[#0F3D6E] hover:bg-sky-700 text-white transition-colors"
             >
-              Plot 3D Surface
+              Plot Surface
             </button>
           </form>
 
           {parseError && (
-            <div className="p-2.5 rounded-lg bg-rose-950/60 border border-rose-500/40 text-xs text-rose-300">
+            <div className="p-2.5 rounded-md bg-rose-950/60 border border-rose-500/40 text-xs text-rose-300">
               {parseError}
             </div>
           )}
 
           {/* Dual Sliders: Tangent Point (x0, y0) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950/70 p-4 rounded-xl border border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#111622] p-4 rounded-md border border-[#242B3D]">
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-slate-300">Evaluate Point x₀:</span>
-                <span className="font-mono text-amber-300 font-bold">{x0.toFixed(2)}</span>
+                <span className="font-semibold text-zinc-300">Coordinate x₀</span>
+                <span className="font-mono text-amber-300 font-semibold">{x0.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -723,14 +737,14 @@ export const SurfaceGrapher3D: React.FC = () => {
                 step="0.05"
                 value={x0}
                 onChange={(e) => setX0(parseFloat(e.target.value))}
-                className="w-full accent-cyan-400"
+                className="w-full accent-sky-400"
               />
             </div>
 
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-slate-300">Evaluate Point y₀:</span>
-                <span className="font-mono text-amber-300 font-bold">{y0.toFixed(2)}</span>
+                <span className="font-semibold text-zinc-300">Coordinate y₀</span>
+                <span className="font-mono text-amber-300 font-semibold">{y0.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -739,62 +753,63 @@ export const SurfaceGrapher3D: React.FC = () => {
                 step="0.05"
                 value={y0}
                 onChange={(e) => setY0(parseFloat(e.target.value))}
-                className="w-full accent-cyan-400"
+                className="w-full accent-sky-400"
               />
             </div>
           </div>
 
           {/* Quantitative Calculus Readout: Partials & Hessian Discriminant */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-              <div className="text-[11px] font-semibold text-slate-400">Elevation z₀</div>
-              <div className="text-base font-black font-mono text-white mt-0.5">
+            <div className="p-3 rounded-md bg-[#111622] border border-[#242B3D]">
+              <div className="text-[11px] font-medium text-zinc-400">Elevation z₀</div>
+              <div className="text-base font-bold font-mono text-white mt-0.5 tabular-nums">
                 {evalResult.z0}
               </div>
-              <div className="text-[10px] text-slate-500 font-mono">f(x₀, y₀)</div>
+              <div className="text-[10px] text-zinc-500 font-mono">f(x₀, y₀)</div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-              <div className="text-[11px] font-semibold text-slate-400">Gradient Slope</div>
-              <div className="text-base font-black font-mono text-cyan-300 mt-0.5">
+            <div className="p-3 rounded-md bg-[#111622] border border-[#242B3D]">
+              <div className="text-[11px] font-medium text-zinc-400">Gradient ∇f</div>
+              <div className="text-base font-bold font-mono text-sky-300 mt-0.5 tabular-nums">
                 ({evalResult.fx}, {evalResult.fy})
               </div>
-              <div className="text-[10px] text-slate-500 font-mono">(∂f/∂x, ∂f/∂y)</div>
+              <div className="text-[10px] text-zinc-500 font-mono">(∂f/∂x, ∂f/∂y)</div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-              <div className="text-[11px] font-semibold text-slate-400">Second Partials</div>
-              <div className="text-sm font-black font-mono text-indigo-300 mt-0.5">
+            <div className="p-3 rounded-md bg-[#111622] border border-[#242B3D]">
+              <div className="text-[11px] font-medium text-zinc-400">Second Partials</div>
+              <div className="text-sm font-bold font-mono text-zinc-200 mt-0.5 tabular-nums">
                 fxx={evalResult.fxx}, fyy={evalResult.fyy}
               </div>
-              <div className="text-[10px] text-slate-500 font-mono">fxy={evalResult.fxy}</div>
+              <div className="text-[10px] text-zinc-500 font-mono">fxy={evalResult.fxy}</div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-950/80 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.1)]">
-              <div className="text-[11px] font-semibold text-amber-300">Hessian D</div>
+            <div className="p-3 rounded-md bg-[#111622] border border-[#2D384F]">
+              <div className="text-[11px] font-medium text-amber-300">Hessian D</div>
               <div
-                className={`text-base font-black font-mono mt-0.5 ${
+                className={`text-base font-bold font-mono mt-0.5 tabular-nums ${
                   evalResult.D > 0
                     ? 'text-emerald-400'
                     : evalResult.D < 0
-                    ? 'text-rose-400'
-                    : 'text-amber-400'
+                      ? 'text-rose-400'
+                      : 'text-amber-400'
                 }`}
               >
                 D = {evalResult.D}
               </div>
-              <div className="text-[10px] text-slate-400 font-mono">fxx·fyy - (fxy)²</div>
+              <div className="text-[10px] text-zinc-400 font-mono">fxx·fyy - (fxy)²</div>
             </div>
           </div>
 
           {/* Classification Banner */}
-          <div className="p-3 rounded-xl bg-slate-950/90 border border-indigo-500/40 flex items-center justify-between gap-2 text-xs">
+          <div className="p-3 rounded-md bg-[#111622] border border-[#242B3D] flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-slate-300">Point Nature:</span>
-              <span className="font-extrabold text-cyan-300">{evalResult.classification}</span>
+              <span className="font-semibold text-zinc-400">Classification:</span>
+              <span className="font-bold text-sky-300">{evalResult.classification}</span>
             </div>
-            <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-              Tangent Plane: z = {evalResult.z0} + {evalResult.fx}(x - {x0.toFixed(2)}) + {evalResult.fy}(y - {y0.toFixed(2)})
+            <span className="text-[11px] text-zinc-400 font-mono hidden sm:inline">
+              Tangent Plane: z = {evalResult.z0} + {evalResult.fx}(x − {x0.toFixed(2)}) +{' '}
+              {evalResult.fy}(y − {y0.toFixed(2)})
             </span>
           </div>
         </div>

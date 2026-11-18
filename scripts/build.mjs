@@ -35,9 +35,30 @@ await esbuild.build({
 
 console.log('3/3 Generating production dist/index.html & dist/404.html...');
 const indexHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf-8');
+const universalBaseScript = `<script>
+  (function () {
+    var base = window.location.pathname.indexOf('/math104-differential-calculus') === 0
+      ? '/math104-differential-calculus'
+      : '';
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + '/assets/app.css';
+    document.head.appendChild(link);
+    window.__APP_BASE__ = base;
+  })();
+</script>`;
+const universalScriptTag = `<script>
+  (function () {
+    var s = document.createElement('script');
+    s.type = 'module';
+    s.src = (window.__APP_BASE__ || '') + '/assets/app.js';
+    document.body.appendChild(s);
+  })();
+</script>`;
+
 const prodHtml = indexHtml
-  .replace('<!-- APP_STYLES -->', '<link rel="stylesheet" href="./assets/app.css" />')
-  .replace('<!-- APP_SCRIPT -->', '<script type="module" src="./assets/app.js"></script>');
+  .replace('<!-- APP_STYLES -->', universalBaseScript)
+  .replace('<!-- APP_SCRIPT -->', universalScriptTag);
 
 fs.writeFileSync(path.join(distDir, 'index.html'), prodHtml, 'utf-8');
 fs.writeFileSync(path.join(distDir, '404.html'), prodHtml, 'utf-8');

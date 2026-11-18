@@ -16,19 +16,20 @@ export const InteractiveLabPage: React.FC = () => {
   }, [recordVisit]);
 
   return (
-    <div className="space-y-8">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs">
-        <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-          Interactive Visual Sandbox
-        </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+    <div className="space-y-10">
+      <header className="border-b border-zinc-200 dark:border-[#242B3D] pb-6 space-y-2">
+        <div className="text-[11px] font-bold uppercase tracking-widest text-[#0F3D6E] dark:text-sky-400">
+          Interactive Visual &amp; Symbolic Sandbox
+        </div>
+        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50">
           Interactive Differential Calculus Lab
         </h1>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-          Experiment with live graphs, tangent lines, limit tables, difference quotients, symbolic
-          step-by-step derivatives, curve sketching, and 3D multivariable surface exploration.
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
+          Experiment with live 3D multivariable surfaces, tangent planes, 2D derivative curves,
+          limit tables, difference quotients, symbolic step-by-step derivatives, and curve
+          sketching.
         </p>
-      </div>
+      </header>
 
       {/* Flagship 3D Multivariable Surface & Tangent Plane Engine */}
       <SurfaceGrapher3D />
